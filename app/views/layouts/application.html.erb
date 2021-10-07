@@ -14,11 +14,13 @@
       <nav>
       <% if professional_signed_in? %> 
           <%= current_professional.email %></li> ||
+          <%= link_to 'Atualizar perfil' %> ||
+          <%= link_to 'Buscar projetos' %> ||
           <%= link_to 'Sair', destroy_professional_session_path, method: :delete %> 
         <div>=================================================================</div>
       <% elsif user_signed_in? %>
           <%= current_user.email %> ||
-          <%= link_to 'Cadastrar um novo projeto' %>
+          <%= link_to 'Cadastrar um novo projeto' %> ||
           <%= link_to 'Meus projetos' %> ||
           <%= link_to 'Sair', destroy_user_session_path, method: :delete %> 
           <div>=================================================================</div>
