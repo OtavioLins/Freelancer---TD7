@@ -1,0 +1,2 @@
+class OccupationArea < ApplicationRecord
+end
