@@ -102,7 +102,7 @@ describe 'login and registration:' do
     
             expect(page).to have_content(professional.email)
             expect(page).to have_content('Login efetuado com sucesso')
-            expect(page).to have_link('Atualizar perfil')
+            expect(page).to have_link('Meu perfil')
             expect(page).to have_link('Buscar projetos')
             expect(page).not_to have_link('Entrar como usuário')
             expect(page).not_to have_link('Entrar como profissional')
@@ -129,8 +129,8 @@ describe 'login and registration:' do
             click_on 'Cadastrar'
 
             expect(page).to have_content('otavio@professional.com.br')
-            expect(page).to have_content('Preencha seu perfil')
-            expect(page).to have_link('Atualizar perfil')
+            expect(page).to have_content('Atualize seu perfil')
+            expect(page).to have_link('Meu perfil')
             expect(page).to have_link('Buscar projetos')
             expect(page).to have_link('Sair')
             expect(page).not_to have_link('Entrar como usuário')
