@@ -1,0 +1,14 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      profile: 'Perfil'
+    attributes:
+      profile:
+        full_name: 'Nome completo'
+        social_name: 'Nome social'
+        description: 'Descrição'
+        birth_date: 'Data de nascimento'
+        occupation_area_id: 'Área de atuação'
+        educational_background: 'Formação'
+        prior_experience: 'Experiência prévia'

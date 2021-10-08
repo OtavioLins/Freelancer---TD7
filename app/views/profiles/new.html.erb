@@ -1,0 +1,51 @@
+<h1> Crie seu perfil </h1>
+
+<p> Para poder usar nossa aplicação, você profissional deve preencher seu perfil
+com todos os dados abaixo. </p>
+
+<%= form_with model: @profile do |f| %>
+
+<div>
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:full_name).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :social_name %>
+    <%= f.text_field :social_name %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:social_name).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :educational_background %>
+    <%= f.text_field :educational_background %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:educational_background).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:description).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :prior_experience %>
+    <%= f.text_field :prior_experience %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:prior_experience).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :birth_date %>
+    <%= f.date_field :birth_date %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:birth_Date).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :occupation_area_id%>
+    <%= f.collection_select :occupation_area_id, @occupation_areas, :id, :name, prompt: 'Escolha sua área de ocupação' %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:occupation_area_id).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+    <%= f.submit 'Criar perfil' %>
+<%end%>

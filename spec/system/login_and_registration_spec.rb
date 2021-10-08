@@ -129,7 +129,7 @@ describe 'login and registration:' do
             click_on 'Cadastrar'
 
             expect(page).to have_content('otavio@professional.com.br')
-            expect(page).to have_content('Atualize seu perfil')
+            expect(page).to have_content('Crie seu perfil')
             expect(page).to have_link('Meu perfil')
             expect(page).to have_link('Buscar projetos')
             expect(page).to have_link('Sair')
