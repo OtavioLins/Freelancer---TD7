@@ -1,6 +1,15 @@
 ---
 pt-BR:
   activerecord:
+    errors:
+      models:
+        professional:
+          attributes:
+            password:
+              presence: 'não pode ficar em branco'
+              too_short: 'deve ter no mínimo 6 caracteres'
+            password_confirmation: 
+              confirmation: 'e senha não são iguais'   
     models:
       professional: 'Profissional'
     attributes:
@@ -8,3 +17,5 @@ pt-BR:
         password: 'Senha'
         password_confirmation: 'Confirme sua senha'
         remember_me: 'Lembre de mim'
+
+        

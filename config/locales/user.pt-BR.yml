@@ -1,6 +1,15 @@
 ---
 pt-BR:
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              presence: 'não pode ficar em branco'
+              too_short: 'deve ter no mínimo 6 caracteres'
+            password_confirmation: 
+              confirmation: 'e senha não são iguais'
     models:
       user: 'Usuário'
     attributes:

@@ -1,1 +1,23 @@
 <h2> Perfil de <%= @profile.social_name.split[0] %> </h2>
+<h3> <%= @profile.description %> </h3>
+<div>
+<dl>
+  <dt>Nome:</dt>
+  <dd><%= @profile.social_name %></dd>
+
+  <dt>Formação:</dt>
+  <dd><%= @profile.educational_background %></dd>
+
+  <dt>Experiência prévia:</dt>
+  <dd><%= @profile.prior_experience %></dd>
+
+  <dt>Data de nascimento:</dt>
+  <dd><%= "#{@profile.birth_date.day.to_s.rjust(2,'0')}/#{@profile.birth_date.month.to_s.rjust(2,'0')}/#{@profile.birth_date.year}"%></dd>
+
+  <dt>Área de atuação:</dt>
+  <dd><%= @profile.occupation_area.name %></dd>
+
+  <dt>Email:</dt>
+  <dd><%= @profile.professional.email %></dd>
+
+  <%= link_to 'Atualizar perfil'%>

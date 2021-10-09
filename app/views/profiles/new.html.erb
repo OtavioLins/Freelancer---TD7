@@ -38,7 +38,7 @@ com todos os dados abaixo. </p>
 <div>
     <%= f.label :birth_date %>
     <%= f.date_field :birth_date %>
-    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:birth_Date).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:birth_date).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
 </div>
 
 <div>

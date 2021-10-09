@@ -10,5 +10,6 @@ pt-BR:
         description: 'Descrição'
         birth_date: 'Data de nascimento'
         occupation_area_id: 'Área de atuação'
+        occupation_area: 'Área de atuação'
         educational_background: 'Formação'
         prior_experience: 'Experiência prévia'

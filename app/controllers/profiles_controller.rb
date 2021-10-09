@@ -18,6 +18,10 @@ class ProfilesController < ApplicationController
     end
 
     def show
-        @profile = Profile.find(params[:id])
+        if current_professional.profile.valid?
+            @profile = Profile.find(params[:id])
+        else
+            redirect_to new_profile_path
+        end
     end
 end

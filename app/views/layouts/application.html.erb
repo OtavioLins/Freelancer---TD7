@@ -14,7 +14,11 @@
       <nav>
       <% if professional_signed_in? %> 
           <%= current_professional.email %></li> ||
-          <%= link_to 'Meu perfil' %> ||
+          <% if current_professional.profile.nil? or current_professional.profile.invalid? %>
+            <%= link_to 'Meu perfil',  new_profile_path %> ||
+          <% else %>
+            <%= link_to 'Meu perfil',  profile_path(current_professional.profile.id)%> ||
+          <% end %>
           <%= link_to 'Buscar projetos' %> ||
           <%= link_to 'Sair', destroy_professional_session_path, method: :delete %> 
         <div>=================================================================</div>
