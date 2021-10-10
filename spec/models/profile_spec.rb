@@ -22,12 +22,32 @@ describe Profile do
             'Experiência prévia é obrigatório(a)')
         end
 
-        it 'Birth date must be valid' do
-        
+        it 'Professional must be over 18 years old 1' do
+            @professional = Professional.create!(email: 'otavio@gmail.com', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.new(birth_date: 17.years.ago, full_name: 'Otávio Augusto', 
+                                   social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                   educational_background: 'Matemático', occupation_area: @occupation_area,
+                                   description: 'Profissional em mud...', professional: @professional)
+            
+            expect(@profile.valid?).to eq(false)
+            expect(@profile.errors.full_messages_for(:birth_date)).to include(
+            'Data de nascimento : Profissional deve ser maior de 18 anos')
         end
 
-        it 'Must have a name and a surname' do
-        
+        it 'Professional must have a name and a surname' do
+            @professional = Professional.create!(email: 'otavio@gmail.com', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.new(birth_date: 18.years.ago, full_name: 'Otávio', 
+                                   social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                   educational_background: 'Matemático', occupation_area: @occupation_area,
+                                   description: 'Profissional em mud...', professional: @professional)
+            
+            expect(@profile.valid?).to eq(false)
+            expect(@profile.errors.full_messages_for(:birth_date)).not_to include(
+            'Data de nascimento : Profissional deve ser maior de 18 anos')
+            expect(@profile.errors.full_messages_for(:full_name)).to include(
+            'Nome completo deve incluir um sobrenome')
         end
     end 
 end

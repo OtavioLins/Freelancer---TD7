@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   devise_for :users, path: 'users'
   root to: "home#index"
 
-  resources :profiles, only: [:show, :new, :create, :update]
+  resources :profiles, only: [:show, :new, :create, :edit, :update]
 end

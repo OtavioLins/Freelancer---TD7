@@ -1,0 +1,45 @@
+<h1> Edite seu perfil </h1>
+
+<p> Preencha apenas os campos que deseja alterar! </p>
+
+<%= form_with model: @profile do |f| %>
+
+<div>
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:full_name).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :social_name %>
+    <%= f.text_field :social_name %>
+</div>
+
+<div>
+    <%= f.label :educational_background %>
+    <%= f.text_field :educational_background %>
+</div>
+
+<div>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+</div>
+
+<div>
+    <%= f.label :prior_experience %>
+    <%= f.text_field :prior_experience %>
+</div>
+
+<div>
+    <%= f.label :birth_date %>
+    <%= f.date_field :birth_date %>
+    <li><FONT COLOR="#ff0000"><%= @profile.errors.full_messages_for(:birth_date).to_sentence if (not @profile.nil?) and (@profile.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :occupation_area_id%>
+    <%= f.collection_select :occupation_area_id, @occupation_areas, :id, :name, prompt: 'Escolha sua área de ocupação' %>
+</div>
+
+    <%= f.submit 'Atualizar perfil' %>
+<%end%>

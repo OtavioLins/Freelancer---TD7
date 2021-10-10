@@ -12,7 +12,7 @@
   <dd><%= @profile.prior_experience %></dd>
 
   <dt>Data de nascimento:</dt>
-  <dd><%= "#{@profile.birth_date.day.to_s.rjust(2,'0')}/#{@profile.birth_date.month.to_s.rjust(2,'0')}/#{@profile.birth_date.year}"%></dd>
+  <dd><%= l @profile.birth_date %></dd>
 
   <dt>Área de atuação:</dt>
   <dd><%= @profile.occupation_area.name %></dd>
@@ -20,4 +20,4 @@
   <dt>Email:</dt>
   <dd><%= @profile.professional.email %></dd>
 
-  <%= link_to 'Atualizar perfil'%>
+  <%= link_to 'Atualizar perfil', edit_profile_path(@profile)%>

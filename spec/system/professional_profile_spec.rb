@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+require 'pry'
 describe 'Profile:' do
     context 'creation' do
         it 'immediately after sign up' do
@@ -75,12 +75,31 @@ describe 'Profile:' do
             expect(page).to have_content('Formação é obrigatório(a)')
             expect(page).to have_content('Área de atuação é obrigatório(a)')
         end
-        
-        it 'unssucessfully - professional didnt give a proper full name and a proper birth date' do
-        
-        end
     end
-    context 'Update:' do
-    
+    context 'Edit:' do
+        it 'successfully' do
+            @professional = Professional.create!(email: 'otavio@gmail.com', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional)
+
+            login_as @professional, scope: :professional
+            visit root_path
+            click_on 'Meu perfil'
+            click_on 'Atualizar perfil'
+            fill_in 'Nome completo', with: 'Otávio Augusto da Silva Lins'
+            fill_in 'Descrição', with: 'Dev júnior buscando oportunidades'
+            fill_in 'Experiência prévia', with: 'Trabalhei na level up como designer de jogos'
+            click_on 'Atualizar perfil'
+
+            expect(page).to have_content('Perfil de Otávio')
+            expect(page).to have_content('Nome: Otávio Augusto')
+            expect(page).to have_content('Dev júnior buscando oportunidades')
+            expect(page).to have_content('Experiência prévia: Trabalhei na level up como designer de jogos')
+            expect(page).to have_content('Área de atuação: Dev')
+            expect(page).to have_link('Atualizar perfil')            
+        end
     end
 end
