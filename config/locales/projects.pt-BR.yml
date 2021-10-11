@@ -1,0 +1,14 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      project: 'Projeto'
+    attributes:
+      project:
+        title: 'Título'
+        description: 'Descrição'
+        skills: 'Habilidades buscadas'
+        user_id: 'Dono do projeto'
+        date_limit: 'Data limite para propostas'
+        hour_value: 'Valor máximo por hora'
+        work_regimen: 'Regime de trabalho'

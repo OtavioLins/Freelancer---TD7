@@ -1,0 +1,20 @@
+<h2 align="center"> <%= @project.title %> </h2>
+<h3> <%= @project.description %> </h3>
+<div>
+<dl>
+  <dt>Habilidades buscadas:</dt>
+  <dd><%= @project.skills %></dd>
+
+  <dt>Valor máximo por hora:</dt>
+  <dd><%= number_to_currency(@project.hour_value) %></dd>
+
+  <dt>Data limite para propostas:</dt>
+  <dd><%= l @project.date_limit %></dd>
+
+  <dt>Regime de trabalho:</dt>
+  <dd><%= @project.work_regimen %></dd>
+
+  <dt>Dono do projeto:</dt>
+  <dd><%= @project.user.email %></dd>
+
+  <%= (link_to 'Editar dados do projeto') if current_user%>

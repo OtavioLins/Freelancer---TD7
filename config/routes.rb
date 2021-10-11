@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   resources :profiles, only: [:show, :new, :create, :edit, :update, :index]
   resources :occupation_areas, only: [:show]
+  resources :projects, only: [:new, :create, :show, :index]
 end
