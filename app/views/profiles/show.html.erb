@@ -20,4 +20,4 @@
   <dt>Email:</dt>
   <dd><%= @profile.professional.email %></dd>
 
-  <%= link_to 'Atualizar perfil', edit_profile_path(@profile)%>
+  <%= (link_to 'Atualizar perfil', edit_profile_path(@profile)) if current_professional%>

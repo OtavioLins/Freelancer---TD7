@@ -1,0 +1,7 @@
+<p> <%= 'Nenhum profissional dessa categoria' if @profiles.empty? %></p>
+
+<p><% @profiles.each do |profile|%>
+    <p><%= link_to profile.social_name, profile%> <BR>
+    - Descrição: <%= profile.description%> <BR>
+    - Área de ocupação: <%= profile.occupation_area.name%></p>
+   <%end%></p>

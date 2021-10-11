@@ -1,0 +1,16 @@
+<h1 align="center"> Freelancers </h1>
+<p align="center"> Caro usuário, boas vindas a nossa plataforma! Aqui, poderá ver a lista 
+de profissionais atualmente cadastrados. <BR> 
+Caso queira, pode filtrá-los de acordo com sua área de atuação. Para visualizar o perfil completo de cada profissional,
+basta clicar em seu nome. </p>
+<hr>
+<h3 align="center"> Filtrar profissionals pela área de atuação </h3>
+<p align="center"> Atualmente, temos profissionais das seguintes áreas: <p>
+
+<p><% @occupation_areas.each do |oa|%>
+    <%= link_to oa.name, oa %> ||
+<% end %></p>
+<hr>
+<p> A seguir, temos uma lista de todos os profissionais disponíveis em nossa plataforma: </p>
+
+<%= render "shared/profiles_preview" %>

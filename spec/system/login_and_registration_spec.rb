@@ -18,6 +18,7 @@ describe 'login and registration:' do
             expect(page).not_to have_link('Entrar como usuário')
             expect(page).not_to have_link('Entrar como profissional')
             expect(page).to have_link('Sair')
+            expect(page).to have_content('Filtrar profissionals pela área de atuação')
         end
 
         it 'logs in using unregistered email' do
@@ -139,6 +140,7 @@ describe 'login and registration:' do
             expect(page).to have_content('Crie seu perfil')
             expect(page).to have_content('Login efetuado com sucesso')
             expect(page).to have_link('Meu perfil')
+            expect(page).to have_link('Meus projetos')
             expect(page).to have_link('Buscar projetos')
             expect(page).not_to have_link('Entrar como usuário')
             expect(page).not_to have_link('Entrar como profissional')
@@ -184,6 +186,7 @@ describe 'login and registration:' do
             expect(page).to have_content('otavio@professional.com.br')
             expect(page).to have_content('Crie seu perfil')
             expect(page).to have_link('Meu perfil')
+            expect(page).to have_link('Meus projetos')
             expect(page).to have_link('Buscar projetos')
             expect(page).to have_link('Sair')
             expect(page).not_to have_link('Entrar como usuário')

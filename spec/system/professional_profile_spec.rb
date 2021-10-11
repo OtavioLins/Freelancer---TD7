@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pry'
 describe 'Profile:' do
     context 'creation' do
         it 'immediately after sign up' do
@@ -90,16 +89,38 @@ describe 'Profile:' do
             click_on 'Meu perfil'
             click_on 'Atualizar perfil'
             fill_in 'Nome completo', with: 'Otávio Augusto da Silva Lins'
-            fill_in 'Descrição', with: 'Dev júnior buscando oportunidades'
             fill_in 'Experiência prévia', with: 'Trabalhei na level up como designer de jogos'
             click_on 'Atualizar perfil'
 
             expect(page).to have_content('Perfil de Otávio')
             expect(page).to have_content('Nome: Otávio Augusto')
-            expect(page).to have_content('Dev júnior buscando oportunidades')
             expect(page).to have_content('Experiência prévia: Trabalhei na level up como designer de jogos')
             expect(page).to have_content('Área de atuação: Dev')
             expect(page).to have_link('Atualizar perfil')            
+        end
+
+        it 'Unsuccessful' do
+            @professional = Professional.create!(email: 'otavio@gmail.com', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                        social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                        educational_background: 'Matemático', occupation_area: @occupation_area,
+                                        description: 'Profissional em mud...', professional: @professional)
+
+            login_as @professional, scope: :professional
+            visit root_path
+            click_on 'Meu perfil'
+            click_on 'Atualizar perfil'
+            fill_in 'Nome completo', with: 'Otávio'
+            fill_in 'Descrição', with: ''
+            fill_in 'Experiência prévia', with: 'Trabalhei na level up como designer de jogos'
+            fill_in 'Data de nascimento', with: 17.years.ago
+            click_on 'Atualizar perfil'
+
+            expect(page).to have_content('Data de nascimento : Profissional deve ser maior de 18 anos')
+            expect(page).to have_content('Nome completo deve incluir um sobrenome')
+            expect(page).not_to have_content('Nome social é obrigatório(a)')
+            expect(page).to have_content('Descrição é obrigatório(a)')
         end
     end
 end

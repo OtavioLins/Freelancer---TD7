@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   devise_for :users, path: 'users'
   root to: "home#index"
 
-  resources :profiles, only: [:show, :new, :create, :edit, :update]
+  resources :profiles, only: [:show, :new, :create, :edit, :update, :index]
+  resources :occupation_areas, only: [:show]
 end

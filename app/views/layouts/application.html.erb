@@ -13,24 +13,26 @@
   <body>
       <nav>
       <% if professional_signed_in? %> 
-          <%= current_professional.email %></li> ||
+          <p align="right"><%= current_professional.email %></li> ||
+          <%= link_to 'Buscar projetos' %> ||
           <% if current_professional.profile.nil? or current_professional.profile.invalid? %>
             <%= link_to 'Meu perfil',  new_profile_path %> ||
           <% else %>
             <%= link_to 'Meu perfil',  profile_path(current_professional.profile.id)%> ||
           <% end %>
-          <%= link_to 'Buscar projetos' %> ||
-          <%= link_to 'Sair', destroy_professional_session_path, method: :delete %> 
-        <div>=================================================================</div>
+          <%= link_to 'Meus projetos'%> ||
+          <%= link_to 'Sair', destroy_professional_session_path, method: :delete %></p>
+          <hr>
       <% elsif user_signed_in? %>
-          <%= current_user.email %> ||
+          <p align="right"><%= current_user.email %> ||
           <%= link_to 'Cadastrar um novo projeto' %> ||
           <%= link_to 'Meus projetos' %> ||
-          <%= link_to 'Sair', destroy_user_session_path, method: :delete %> 
-          <div>=================================================================</div>
+          <%= link_to 'Sair', destroy_user_session_path, method: :delete %><p> 
+          <hr>
       <% else %>
-        <p><%= link_to 'Entrar como profissional', new_professional_session_path %> || 
+        <p align="right"><%= link_to 'Entrar como profissional', new_professional_session_path %> || 
         <%= link_to 'Entrar como usuário', new_user_session_path %></p>
+        <hr>
       <% end %>
     </nav>
     <p class="notice"><%= notice %></p>
