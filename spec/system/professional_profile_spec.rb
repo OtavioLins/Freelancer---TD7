@@ -123,4 +123,51 @@ describe 'Profile:' do
             expect(page).to have_content('Descrição é obrigatório(a)')
         end
     end
+
+    context 'Visualization:' do
+        it 'through Meu perfil' do
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional)
+            
+            login_as @professional, scope: :professional
+            visit root_path 
+            click_on 'Meu perfil'
+
+            expect(page).to have_content('Perfil de Otávio')
+            expect(page).to have_content('Profissional em mud...')
+            expect(page).to have_content('Nome: Otávio Augusto')
+            expect(page).to have_content('Formação: Matemático')
+            expect(page).to have_content('Experiência prévia: Nenhuma')
+            expect(page).to have_content('Área de atuação: Dev')
+            expect(page).to have_content('Email: otavio@professional.com.br')
+            expect(page).to have_link('Atualizar perfil')
+        end
+        
+        it 'through User homepage' do
+            user = User.create!(email: 'otavio@user.com.br', password: '123456789')
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional)
+            
+            login_as user, scope: :user
+            visit root_path
+            click_on @profile.social_name
+
+            expect(page).to have_content('Perfil de Otávio')
+            expect(page).to have_content('Profissional em mud...')
+            expect(page).to have_content('Nome: Otávio Augusto')
+            expect(page).to have_content('Formação: Matemático')
+            expect(page).to have_content('Experiência prévia: Nenhuma')
+            expect(page).to have_content('Área de atuação: Dev')
+            expect(page).to have_content('Email: otavio@professional.com.br')
+            expect(page).not_to have_link('Atualizar perfil')
+        end
+    end
 end

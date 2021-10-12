@@ -61,5 +61,8 @@ describe 'Users projects' do
     context 'Visualization:' do
         it 'through Meus projetos' do
         end
+
+        it 'though Professional homepage' do
+        end
     end
 end

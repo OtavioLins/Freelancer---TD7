@@ -1,0 +1,7 @@
+<p> <%= 'Nenhum projeto aberto' if @projects.empty? %></p>
+
+<p><% @projects.each do |project|%>
+    <p><%= link_to project.title, project%> <BR>
+    - Descrição: <%= project.description%> <BR>
+    - Habilidades buscadas: <%= project.skills %></p>
+   <%end%></p>

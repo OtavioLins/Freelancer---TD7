@@ -18,7 +18,6 @@ describe 'login and registration:' do
             expect(page).not_to have_link('Entrar como usuário')
             expect(page).not_to have_link('Entrar como profissional')
             expect(page).to have_link('Sair')
-            expect(page).to have_content('Filtrar profissionals pela área de atuação')
         end
 
         it 'logs in using unregistered email' do
@@ -161,7 +160,7 @@ describe 'login and registration:' do
             fill_in 'Senha', with: @professional.password
             click_on 'Entrar'
 
-            expect(current_path).to eq(root_path)
+            expect(current_path).to eq(projects_path)
         end
 
         it 'logs in using unregistered email' do

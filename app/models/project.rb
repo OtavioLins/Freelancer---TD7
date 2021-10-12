@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   belongs_to :user
 
   enum work_regimen: {remoto: 0, presencial: 1, híbrido: 2}
+  enum status: {open: 0, closed: 1, finished: 2}
   validates :work_regimen, :title, :description, :skills, :date_limit, :hour_value,
   :user_id, presence: {message: 'é obrigatório(a)'}
   validates :hour_value, numericality: {greater_than_or_equal_to: 0, message: 'deve ser um número positivo'}
