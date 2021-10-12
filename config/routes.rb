@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   resources :profiles, only: [:show, :new, :create, :edit, :update, :index]
   resources :projects, only: [:new, :create, :show, :index] do
     get 'my_projects', on: :collection
+    resources :project_applications, only: [:create, :show]
   end
 end

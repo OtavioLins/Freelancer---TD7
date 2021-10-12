@@ -13,3 +13,6 @@ pt-BR:
         occupation_area: 'Área de atuação'
         educational_background: 'Formação'
         prior_experience: 'Experiência prévia'
+        open: 'Em aberto'
+        closed: 'Propostas encerradas'
+        finished: 'Encerrado'

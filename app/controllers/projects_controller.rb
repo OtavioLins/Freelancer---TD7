@@ -29,6 +29,7 @@ class ProjectsController < ApplicationController
 
     def show
         @project = Project.find(params[:id])
+        @project_application = ProjectApplication.new
     end
 
     private

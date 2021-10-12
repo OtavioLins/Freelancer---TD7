@@ -1,0 +1,11 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      project_application: 'Proposta'
+    attributes:
+      project_application:
+        motivation: 'Porque se acha capaz de pegar esse projeto?'
+        expected_conclusion: 'Expectativa de conclusão'
+        weekly_hours: 'Horas semanais que pretende trabalhar no projeto'
+        expected_payment: 'Valor que espera receber por hora'

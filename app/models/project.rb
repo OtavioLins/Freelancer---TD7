@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
   belongs_to :user
-
+  has_many :project_applications
   enum work_regimen: {remoto: 0, presencial: 1, híbrido: 2}
   enum status: {open: 0, closed: 1, finished: 2}
   validates :work_regimen, :title, :description, :skills, :date_limit, :hour_value,
