@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'Users projects' do
+    include ActiveSupport::Testing::TimeHelpers
     context 'Creation:' do
         it 'Successfully' do
             user = User.create!(email: 'otavio@user.com.br', password: '123456789')
@@ -59,10 +60,79 @@ describe 'Users projects' do
         end
     end
     context 'Visualization:' do
-        it 'through Meus projetos' do
+        it 'through Meus projetos - user can see both open,closed and finished projects' do
+            user = User.create!(email: 'otavio@user.com', password: '123131')
+            user2 = User.create!(email:'jane@user.com', password: '123546')
+            @project1 = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 20.days.from_now, work_regimen: :remoto,
+                                       hour_value: 300, user: user, status: :open)
+            @project2 = Project.create!(title: 'Sistema de aluguel de carros',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer carros alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 10.days.from_now, work_regimen: :remoto,
+                                       hour_value: 300, user: user, status: :open)
+            @project3 = Project.create!(title: 'Sistema de aluguel de iates',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 3.days.from_now, work_regimen: :remoto,
+                                       hour_value: 300, user: user2, status: :finished)
+            
+            travel_to 15.days.from_now do
+                login_as user, scope: :user
+                visit root_path
+                click_on 'Meus projetos'
+            end
+
+            expect(page).to have_content('Meus projetos')
+            expect(page).to have_link(@project1.title)
+            expect(page).to have_content("Descrição: #{@project1.description}")
+            expect(page).to have_content("Habilidades buscadas: #{@project1.skills}")
+            expect(page).to have_content("Status: open")
+            expect(page).to have_content('Meus projetos')
+            expect(page).to have_link(@project2.title)
+            expect(page).to have_content("Descrição: #{@project2.description}")
+            expect(page).to have_content("Habilidades buscadas: #{@project2.skills}")
+            expect(page).to have_content("Status: closed")
+            expect(page).to have_content('Meus projetos')
+            expect(page).not_to have_link(@project3.title)
         end
 
-        it 'though Professional homepage' do
+        it 'through Professional homepage - professional can only see open projects' do
+            user = User.create!(email: 'otavio@user.com', password: '123131')
+            @project1 = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 20.days.from_now, work_regimen: :remoto,
+                                       hour_value: 300, user: user, status: :open)
+            @project2 = Project.create!(title: 'Sistema de aluguel de carros',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer carros alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 10.days.from_now, work_regimen: :remoto,
+                                       hour_value: 300, user: user, status: :closed)
+            @project3 = Project.create!(title: 'Sistema de aluguel de iates',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer iater alugáveis em todo o litoral de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 3.days.from_now, work_regimen: :remoto,
+                                       hour_value: 300, user: user, status: :finished)
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional)
+            
+            login_as @professional, scope: :professional
+            visit root_path 
+
+            expect(page).to have_link(@project1.title)
+            expect(page).to have_content(@project1.description)
+            expect(page).to have_content(@project1.skills)
+            expect(page).not_to have_link(@project2.title)
+            expect(page).not_to have_content(@project2.description)
+            expect(page).not_to have_link(@project3.title)
+            expect(page).not_to have_content(@project3.description)
         end
     end
 end

@@ -7,7 +7,7 @@ class Project < ApplicationRecord
   :user_id, presence: {message: 'é obrigatório(a)'}
   validates :hour_value, numericality: {greater_than_or_equal_to: 0, message: 'deve ser um número positivo'}
 
-  validate :date_limit_cant_be_in_the_past
+  validate :date_limit_cant_be_in_the_past, unless: :closed?
 
   private
 

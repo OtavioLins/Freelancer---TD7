@@ -24,9 +24,9 @@
           <%= link_to 'Sair', destroy_professional_session_path, method: :delete %></p>
           <hr>
       <% elsif user_signed_in? %>
-          <p align="right"><%= current_user.email %> ||
+          <p align="right"><%= link_to current_user.email %> ||
           <%= link_to 'Cadastrar um novo projeto', new_project_path %> ||
-          <%= link_to 'Meus projetos', projects_path %> ||
+          <%= link_to 'Meus projetos', my_projects_projects_path %> ||
           <%= link_to 'Sair', destroy_user_session_path, method: :delete %><p> 
           <hr>
       <% else %>

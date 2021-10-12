@@ -1,0 +1,13 @@
+<h3 align="center"> Meus projetos </h3>
+
+<p align="center"> Aqui se encontra a lista de todos os projetos que você já cadastrou em nossa plataforma! </p>
+<hr>
+
+<p> <%= 'Nenhum projeto cadastrado' if @projects.empty? %></p>
+
+<p><% @projects.each do |project|%>
+    <p><%= link_to project.title, project%> <BR>
+    - Descrição: <%= project.description%> <BR>
+    - Habilidades buscadas: <%= project.skills %></p>
+    - Status: <%= project.status%>
+   <%end%></p>

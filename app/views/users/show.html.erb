@@ -1,0 +1,5 @@
+<h2 align="center"> Perfil de <%=current_user.email%> </h2>
+
+<p align="center"> Aqui você pode encontrar a lista de todos os objetos que você já cadastrou na plataforma </p>
+
+<%= "Nenhum projeto disponível" if @projects.empty? %> <%= link_to 'Cadastre seu primeiro projeto aqui', new_project_path%>

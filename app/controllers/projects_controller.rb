@@ -1,8 +1,9 @@
 class ProjectsController < ApplicationController
-    before_action :authenticate_user!, only: [:create, :new]
+    before_action :authenticate_user!, only: [:create, :new, :my_projects]
     before_action :authenticate_professional!, only: [:index]
-    before_action :authenticate_any, only: [:show]    
-    
+    before_action :authenticate_any, only: [:show]
+    before_action :check_status!, only: [:index, :my_projects, :show]
+
     def create
         @project = Project.new(project_params)
         @project.user = current_user
@@ -15,7 +16,11 @@ class ProjectsController < ApplicationController
     end
     
     def index
-        @projects = Project.where(status: [:open])
+        @projects = Project.where(status: :open)
+    end
+
+    def my_projects
+        @projects = current_user.projects
     end
 
     def new
@@ -30,6 +35,12 @@ class ProjectsController < ApplicationController
 
     def authenticate_any
         current_user.present? || current_professional.present?
+    end
+
+    def check_status!
+        Project.where(status: :open).each do |p|
+            p.closed! if p.date_limit < Time.now
+        end
     end
 
     def project_params
