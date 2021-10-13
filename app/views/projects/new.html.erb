@@ -36,7 +36,7 @@
 
 <div>
     <%= f.label :work_regimen %>
-    <%= f.select :work_regimen, [['Remoto', :remoto], ['Presencial', :presencial], ['Híbrido', :híbrido]] %>
+    <%= f.select :work_regimen, [['Remoto', :remote], ['Presencial', :in_person], ['Híbrido', :hybrid]] %>
     <li><FONT COLOR="#ff0000"><%= @project.errors.full_messages_for(:work_regimen).to_sentence if (not @project.nil?) and (@project.errors.any?) %></li></FONT>
 </div>
 

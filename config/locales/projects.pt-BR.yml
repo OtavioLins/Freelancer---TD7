@@ -12,3 +12,7 @@ pt-BR:
         date_limit: 'Data limite para propostas'
         hour_value: 'Valor máximo por hora'
         work_regimen: 'Regime de trabalho'
+        statuses:
+          open: 'Aberto para propostas'
+          closed: 'Fechado para propostas'
+          finished: 'Encerrado'

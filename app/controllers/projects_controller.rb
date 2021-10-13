@@ -28,6 +28,9 @@ class ProjectsController < ApplicationController
     end
 
     def show
+        if current_professional
+            redirect_to new_profile_path if current_professional.profile.invalid?
+        end        
         @project = Project.find(params[:id])
         @project_application = ProjectApplication.new
     end

@@ -4,7 +4,7 @@
 <dl>
 
   <dt>Status do projeto: </dt>
-  <dd><%= @project.status %></dd>
+  <dd><%= Project.enum_translation(:status, @project.status) %></dd>
 
   <dt>Habilidades buscadas:</dt>
   <dd><%= @project.skills %></dd>
@@ -24,8 +24,8 @@
 </dl>
 
 <% if current_user%>
-  <%= link_to 'Editar dados do projeto' %>
-  <%= link_to 'Ver propostas para esse projeto' %>
+  <%= link_to 'Editar dados do projeto' %> ||
+  <%= link_to 'Ver propostas para esse projeto' %> 
 <% end %>
 
 <% if current_professional %>

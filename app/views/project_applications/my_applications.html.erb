@@ -1,0 +1,15 @@
+<h2 align="center"> Minhas propostas </h2>
+
+<%if @project_applications.empty? %>
+     Nenhuma aplicação feita
+<% else %>
+    <% @project_applications.each do |application|%>
+        <p>Projeto: <%= link_to application.project.title, application.project %> <BR>
+        - Porque se acha capaz de pegar esse projeto? <BR>
+        <%=application.motivation%> <BR>
+        - Valor que espera receber por hora: <%=number_to_currency(application.expected_payment)%> <BR>
+        - Horas semanais que pretende trabalhar no projeto: <%= application.weekly_hours %> horas <BR>
+        - Expectativa de conclusão: <%= application.expected_conclusion%><BR>
+        - Status: <%= ProjectApplication.enum_translation(:situation, application.situation) %></p>
+    <% end %>
+<%end%>
