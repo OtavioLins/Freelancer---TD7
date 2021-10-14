@@ -23,41 +23,45 @@
 
 </dl>
 
-<% if current_user%>
+<% if current_user and current_user.email == @project.user.email%>
   <%= link_to 'Editar dados do projeto' %> ||
   <%= link_to 'Ver propostas para esse projeto', project_project_applications_path(@project) %> 
 <% end %>
 
 <% if current_professional %>
-  <hr>
-  <h3 align="center"> Enviar uma proposta para esse projeto. </h3>
+  <% if ProjectApplication.where(professional: current_professional, project: @project).any? %>
+    Você já fez uma proposta para esse projeto.
+  <% else %>
+    <hr>
+    <h3 align="center"> Enviar uma proposta para esse projeto. </h3>
 
-  <%= form_with model: [@project, @project_application] do |f| %>
-    
-    <div>
-      <%= f.label :motivation%>
-      <%= f.text_field :motivation%>
-      <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:motivation).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
-    </div>
+    <%= form_with model: [@project, @project_application] do |f| %>
+      
+      <div>
+        <%= f.label :motivation%>
+        <%= f.text_field :motivation%>
+        <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:motivation).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
+      </div>
 
-    <div>
-      <%= f.label :expected_payment%>
-      <%= f.number_field :expected_payment%>
-      <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:expected_payment).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
-    </div>
+      <div>
+        <%= f.label :expected_payment%>
+        <%= f.number_field :expected_payment%>
+        <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:expected_payment).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
+      </div>
 
-    <div>
-      <%= f.label :weekly_hours%>
-      <%= f.number_field :weekly_hours%>
-      <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:weekly_hours).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
-    </div>
+      <div>
+        <%= f.label :weekly_hours%>
+        <%= f.number_field :weekly_hours%>
+        <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:weekly_hours).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
+      </div>
 
-    <div>
-      <%= f.label :expected_conclusion%>
-      <%= f.text_field :expected_conclusion%>
-      <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:expected_conclusion).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
-    </div>
+      <div>
+        <%= f.label :expected_conclusion%>
+        <%= f.text_field :expected_conclusion%>
+        <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:expected_conclusion).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
+      </div>
 
-    <%= f.submit 'Enviar proposta' %>
+      <%= f.submit 'Enviar proposta' %>
+    <% end %>
   <% end %>
 <% end %>

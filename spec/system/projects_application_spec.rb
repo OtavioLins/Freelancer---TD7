@@ -61,6 +61,32 @@ describe 'Projects application:' do
             expect(page).to have_content('Expectativa de conclusão é obrigatório(a)')
             expect(page).to have_content('Valor que espera receber por hora não pode ser maior que o valor máximo por hora estipulado')
         end
+
+        it 'cannot make a second application to the same project' do
+            user = User.create!(email: 'otavio@user.com', password: '123131')
+            @project = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 20.days.from_now, work_regimen: :remote,
+                                       hour_value: 300, user: user, status: :open)
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional)
+            @project_application = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
+                                                               weekly_hours: 10, expected_payment: 100, project: @project, professional: @professional,
+                                                               situation: :analysis)
+        
+            login_as @professional, scope: :professional
+            visit root_path
+            click_on @project.title
+
+            expect(page).to have_content('Você já fez uma proposta para esse projeto.')
+            expect(page).not_to have_content('Enviar uma proposta para esse projeto.')
+        end
+        
         it 'views his applications successfully' do
             @user = User.create!(email: 'otavio@user.com', password: '123131')
             @project = Project.create!(title: 'Sistema de aluguel de imóveis',
@@ -144,6 +170,60 @@ describe 'Projects application:' do
             expect(page).not_to have_content(@project_application2.weekly_hours)
             expect(page).not_to have_content(@project_application2.expected_conclusion)
             expect(page).not_to have_content('R$ 150,00')
+        end
+
+        it 'can access professional profile through his application and view his projects' do
+            @user1 = User.create!(email: 'otavio@user.com', password: '123131')
+            @project1 = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 20.days.from_now, work_regimen: :remote,
+                                       hour_value: 300, user: @user1, status: :open)
+            @user2 = User.create!(email:'Alvin@user.com', password: '154874')
+            @project2 = Project.create!(title: 'Sistema de aluguel de carros',
+                                        description: 'Projeto que visa criar uma aplicação para oferecer carros alugáveis em todo o estado de São Paulo',
+                                        skills: 'Conhecimento em Rails, Web Design e segurança',
+                                        date_limit: 20.days.from_now, work_regimen: :in_person,
+                                        hour_value: 300, user: @user2, status: :open)                           
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @professional2 = Professional.create!(email: 'Alvin@professional.com.br', password: 'dhagfdan')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional)
+            @profile2 = Profile.create!(birth_date: 18.years.ago, full_name: 'José Bezerra', 
+                                       social_name: 'Flynn Rider', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional2) 
+            @project_application1 = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
+                                        weekly_hours: 10, expected_payment: 100, project: @project1, professional: @professional,
+                                        situation: :rejected)
+            @project_application2 = ProjectApplication.create!(motivation: 'Trabalhava como ...', expected_conclusion: '3 semanas',
+                                        weekly_hours: 15, expected_payment: 150, project: @project2, professional: @professional,
+                                        situation: :accepted)
+            @project_application3 = ProjectApplication.create!(motivation: 'Tenho muita experiência ...', expected_conclusion: '2 meses',
+                                        weekly_hours: 5, expected_payment: 175, project: @project1, professional: @professional2,
+                                        situation: :accepted)           
+            login_as @user1, scope: :user
+            
+            visit root_path
+            @project1.finished!
+            @project2.finished!
+            click_on 'Meus projetos'
+            click_on 'Sistema de aluguel de imóveis'
+            click_on 'Ver propostas para esse projeto'        
+            click_on @profile.social_name
+
+            expect(page).to have_content('Perfil de Otávio')
+            expect(page).to have_content('Projetos em que já atuou')
+            expect(page).not_to have_content('Esse profissional ainda não atuou em nenhum projeto')
+            expect(page).to have_link(@project2.title)
+            expect(page).to have_content(@user2.email)
+            expect(page).not_to have_link(@project1.title)
+        end
+
+        it 'can accept an application' do
         end
     end
 end

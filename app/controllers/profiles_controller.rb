@@ -32,11 +32,21 @@ class ProfilesController < ApplicationController
         if current_professional
             if current_professional.profile.valid?
                 @profile = Profile.find(params[:id])
+                @projects = []
+                current_professional.projects.each do |l|
+                    @application = l.project_applications.where(professional: @profile.professional).first
+                    @projects << l if l.finished? and @application.accepted?
+                end 
             else
                 redirect_to new_profile_path
             end
         elsif current_user
             @profile = Profile.find(params[:id])
+            @projects = []
+            @profile.professional.projects.each do |l|
+                @application = l.project_applications.where(professional: @profile.professional).first
+                @projects << l if l.finished? and @application.accepted?
+            end 
         end
     end
 

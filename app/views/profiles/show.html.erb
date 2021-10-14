@@ -19,5 +19,18 @@
 
   <dt>Email:</dt>
   <dd><%= @profile.professional.email %></dd>
+</dl>
+  <%= (link_to 'Atualizar perfil', edit_profile_path(@profile)) if (current_professional and current_professional == @profile.professional)%>
+</div>
 
-  <%= (link_to 'Atualizar perfil', edit_profile_path(@profile)) if current_professional%>
+<h4 align="center"> Projetos em que já atuou </h4>
+<p>
+  <% if not @projects.nil? %>
+      <% @projects.each do |project| %>
+        <%= link_to project.title, project %>
+        Dono do projeto: <%= project.user.email %>
+      <% end %>
+  <% else %>
+      Esse profissional ainda não atuou em nenhum projeto
+  <% end %>
+</p>
