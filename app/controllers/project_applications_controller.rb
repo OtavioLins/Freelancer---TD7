@@ -11,6 +11,7 @@ class ProjectApplicationsController < ApplicationController
         @project_application = ProjectApplication.new(project_application_params)
         @project_application.professional = current_professional
         @project_application.project = Project.find(params[:project_id])
+        @project_application.reject_message = ''
         if @project_application.save
             redirect_to my_applications_path, notice: 'Proposta enviada com sucesso'
         else
@@ -33,7 +34,14 @@ class ProjectApplicationsController < ApplicationController
     end
 
     def reject
-        (ProjectApplication.find(params[:id])).rejected!
+        @project_application = ProjectApplication.find(params[:id])
+        @project_application.reject_message = params.require(:project_application).permit(:reject_message)
+        @project_application.rejected!
+        redirect_to project_project_applications_path(@project_application.project), notice: 'Proposta rejeitada com sucesso'    
+    end
+
+    def reject_justification
+        @project_application = ProjectApplication.find(params[:id])
     end
 
     private

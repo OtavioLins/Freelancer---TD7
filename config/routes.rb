@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :project_applications, only: [:create, :index], shallow: :true do
       post 'accept', on: :member
       post 'reject', on: :member
+      get 'reject_justification', on: :member
     end
 
   end
