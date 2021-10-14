@@ -9,6 +9,7 @@ pt-BR:
         expected_conclusion: 'Expectativa de conclusão'
         weekly_hours: 'Horas semanais que pretende trabalhar no projeto'
         expected_payment: 'Valor que espera receber por hora'
+        situation: 'Status'
         situations:
           analysis: 'Em análise'
           accepted: 'Aceita'

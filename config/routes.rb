@@ -7,9 +7,11 @@ Rails.application.routes.draw do
   resources :profiles, only: [:show, :new, :create, :edit, :update, :index]
   resources :projects, only: [:new, :create, :show, :index] do
     get 'my_projects', on: :collection
-    resources :project_applications, only: [:create, :index]
+    resources :project_applications, only: [:create, :index], shallow: :true do
+      post 'accept', on: :member
+      post 'reject', on: :member
+    end
+
   end
-  resources :project_applications do
-    get 'my_applications', on: :collection
-  end
+  get 'my_applications', to: 'project_applications#my_applications'
 end

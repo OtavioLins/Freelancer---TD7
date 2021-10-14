@@ -20,7 +20,7 @@
           <% else %>
             <%= link_to 'Meu perfil',  profile_path(current_professional.profile.id)%> ||
           <% end %>
-          <%= link_to 'Meus projetos', my_applications_project_applications_path %> ||
+          <%= link_to 'Meus projetos',  my_applications_path%> ||
           <%= link_to 'Sair', destroy_professional_session_path, method: :delete %></p>
           <hr>
       <% elsif user_signed_in? %>

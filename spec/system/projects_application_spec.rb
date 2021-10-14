@@ -86,7 +86,7 @@ describe 'Projects application:' do
             expect(page).to have_content('Você já fez uma proposta para esse projeto.')
             expect(page).not_to have_content('Enviar uma proposta para esse projeto.')
         end
-        
+
         it 'views his applications successfully' do
             @user = User.create!(email: 'otavio@user.com', password: '123131')
             @project = Project.create!(title: 'Sistema de aluguel de imóveis',
@@ -224,6 +224,37 @@ describe 'Projects application:' do
         end
 
         it 'can accept an application' do
+            @user1 = User.create!(email: 'otavio@user.com', password: '123131')
+            @project1 = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 20.days.from_now, work_regimen: :remote,
+                                       hour_value: 300, user: @user1, status: :open)        
+
+            @professional1 = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile1 = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional1)
+            @project_application1 = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
+                                        weekly_hours: 10, expected_payment: 100, project: @project1, professional: @professional1,
+                                        situation: :analysis)
+
+            login_as @user1, scope: :user
+            visit root_path
+            click_on 'Meus projetos'
+            click_on 'Sistema de aluguel de imóveis'
+            click_on 'Ver propostas para esse projeto'
+            click_on 'Aceitar proposta'
+            
+            expect(page).to have_content('Propostas para Sistema de aluguel de imóveis')
+            expect(page).to have_link(@profile1.social_name)
+            expect(page).to have_content(@project_application1.motivation)
+            expect(page).to have_content(@project_application1.weekly_hours)
+            expect(page).to have_content(@project_application1.expected_conclusion)
+            expect(page).to have_content('R$ 100,00')
+            expect(page).to have_content('Status: Aceita')
         end
     end
 end
