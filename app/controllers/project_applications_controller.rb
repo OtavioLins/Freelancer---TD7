@@ -15,7 +15,7 @@ class ProjectApplicationsController < ApplicationController
 
     def index
         @project = Project.find(params[:project_id])
-        @project_applications = ProjectApplication.where(params[:project_id])
+        @project_applications = @project.project_applications
     end
 
     def my_applications

@@ -143,7 +143,7 @@ describe 'Projects application:' do
             expect(page).not_to have_content(@project_application2.motivation)
             expect(page).not_to have_content(@project_application2.weekly_hours)
             expect(page).not_to have_content(@project_application2.expected_conclusion)
-            expect(page).to have_content('R$ 150,00')
+            expect(page).not_to have_content('R$ 150,00')
         end
     end
 end
