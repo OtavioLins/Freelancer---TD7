@@ -23,8 +23,7 @@ describe 'Users projects' do
             expect(page).to have_content('Habilidades buscadas: Conhecimento em Rails, Web Design e segurança')
             expect(page).to have_content('Valor máximo por hora: R$ 300,00')
             # expect(page).to have_content('Data limite para propostas: #{data}')
-            #TODO learn how to configure the data for the test
-            expect(page).to have_content('Regime de trabalho: remote')
+            expect(page).to have_content('Regime de trabalho: Remoto')
         end
 
         it "Unsuccessfully - Left everything blank" do
@@ -89,12 +88,12 @@ describe 'Users projects' do
             expect(page).to have_link(@project1.title)
             expect(page).to have_content("Descrição: #{@project1.description}")
             expect(page).to have_content("Habilidades buscadas: #{@project1.skills}")
-            expect(page).to have_content("Status: open")
+            expect(page).to have_content("Status: Aberto para propostas")
             expect(page).to have_content('Meus projetos')
             expect(page).to have_link(@project2.title)
             expect(page).to have_content("Descrição: #{@project2.description}")
             expect(page).to have_content("Habilidades buscadas: #{@project2.skills}")
-            expect(page).to have_content("Status: closed")
+            expect(page).to have_content("Status: Fechado para propostas")
             expect(page).to have_content('Meus projetos')
             expect(page).not_to have_link(@project3.title)
         end

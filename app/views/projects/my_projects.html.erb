@@ -10,10 +10,11 @@ feitas para cada um deles, clique sobre seu título. </p>
     <p><%= link_to project.title, project%> <BR>
     - Descrição: <%= project.description%> <BR>
     - Habilidades buscadas: <%= project.skills %></p>
-    - Status: <%= project.status%>
+    - Status: <%= Project.enum_translation(:status, project.status)%>
     <% if project.project_applications.count == 0%>
         - Esse projeto ainda não recebeu propostas
     <% else %>
         - Propostas para esse projeto: <%= project.project_applications.count%>
     <% end %>
+    
     <%end%></p>

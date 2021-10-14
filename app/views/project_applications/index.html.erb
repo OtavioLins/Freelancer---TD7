@@ -9,5 +9,5 @@ basta clicar sobre seu nome</p>
        - Expectativa de conclusão: <%= application.expected_conclusion%><BR>
        - Valor que espera receber por hora: <%= number_to_currency(application.expected_payment)%><BR>
        - Horas semanais que pretende trabalhar no projeto: <%= application.weekly_hours %><BR>
-       - Status: <%=application.situation %></p>
+       - Status: <%=ProjectApplication.enum_translation(:situation, application.situation) %></p>
 <%end%>

@@ -11,7 +11,11 @@ pt-BR:
         user_id: 'Dono do projeto'
         date_limit: 'Data limite para propostas'
         hour_value: 'Valor máximo por hora'
-        work_regimen: 'Regime de trabalho'
+        work_regimen: 
+          one: 'Regime de trabalho'
+          remote: 'Remoto'
+          in_person: 'Presencial'
+          hybrid: 'Híbrido'
         statuses:
           open: 'Aberto para propostas'
           closed: 'Fechado para propostas'

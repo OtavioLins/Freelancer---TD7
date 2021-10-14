@@ -16,7 +16,7 @@
   <dd><%= l @project.date_limit %></dd>
 
   <dt>Regime de trabalho:</dt>
-  <dd><%= @project.work_regimen %></dd>
+  <dd><%= Project.enum_translation(:work_regimen, @project.work_regimen) %></dd>
 
   <dt>Dono do projeto:</dt>
   <dd><%= link_to @project.user.email %></dd>
