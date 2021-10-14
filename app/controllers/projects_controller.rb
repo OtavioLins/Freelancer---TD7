@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
     before_action :authenticate_professional!, only: [:index]
     before_action :authenticate_any, only: [:show]
     before_action :check_status!, only: [:index, :my_projects, :show]
-
+    
     def create
         @project = Project.new(project_params)
         @project.user = current_user

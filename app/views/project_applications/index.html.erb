@@ -1,0 +1,13 @@
+<h2 align="center"> Propostas para <%=@project.title%></h2>
+<p> Segue a lista de todas as propostas feitas para esse projeto. Para visualizar o perfil de cada profissional,
+basta clicar sobre seu nome</p>
+<hr>
+<%@project_applications.each do |application|%>
+    <%@profile = Profile.where(professional: application.professional).first%>
+    <p>- Profissional: <%=link_to @profile.social_name, @profile%><BR>
+       - Porque se acha capaz de pegar esse projeto?: <%= application.motivation%><BR>
+       - Expectativa de conclusão: <%= application.expected_conclusion%><BR>
+       - Valor que espera receber por hora: <%= number_to_currency(application.expected_payment)%><BR>
+       - Horas semanais que pretende trabalhar no projeto: <%= application.weekly_hours %><BR>
+       - Status: <%=application.situation %></p>
+<%end%>

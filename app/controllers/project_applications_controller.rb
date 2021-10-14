@@ -13,6 +13,11 @@ class ProjectApplicationsController < ApplicationController
         end
     end
 
+    def index
+        @project = Project.find(params[:project_id])
+        @project_applications = ProjectApplication.where(params[:project_id])
+    end
+
     def my_applications
         if current_professional.profile.valid?
             @project_applications = current_professional.project_applications

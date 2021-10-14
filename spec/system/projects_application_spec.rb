@@ -101,4 +101,49 @@ describe 'Projects application:' do
             expect(page).not_to have_content(@project_application2.weekly_hours)
         end
     end
+    context 'User:' do
+        it 'views the applications for his projects' do
+            @user1 = User.create!(email: 'otavio@user.com', password: '123131')
+            @project1 = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 20.days.from_now, work_regimen: :remote,
+                                       hour_value: 300, user: @user1, status: :open)
+            @user2 = User.create!(email:'Alvin@user.com', password: '154874')
+            @project2 = Project.create!(title: 'Sistema de aluguel de carros',
+                                        description: 'Projeto que visa criar uma aplicação para oferecer carros alugáveis em todo o estado de São Paulo',
+                                        skills: 'Conhecimento em Rails, Web Design e segurança',
+                                        date_limit: 20.days.from_now, work_regimen: :in_person,
+                                        hour_value: 300, user: @user2, status: :open)
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional) 
+            @project_application1 = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
+                                        weekly_hours: 10, expected_payment: 100, project: @project1, professional: @professional,
+                                        situation: :analysis)
+            @project_application2 = ProjectApplication.create!(motivation: 'Trabalhava como ...', expected_conclusion: '3 semanas',
+                                        weekly_hours: 15, expected_payment: 150, project: @project2, professional: @professional,
+                                        situation: :analysis)
+
+            login_as @user1, scope: :user
+            visit root_path
+            click_on 'Meus projetos'
+            click_on 'Sistema de aluguel de imóveis'
+            click_on 'Ver propostas para esse projeto'
+
+            expect(page).to have_content('Propostas para Sistema de aluguel de imóveis')
+            expect(page).to have_link(@profile.social_name)
+            expect(page).to have_content(@project_application1.motivation)
+            expect(page).to have_content(@project_application1.weekly_hours)
+            expect(page).to have_content(@project_application1.expected_conclusion)
+            expect(page).to have_content('R$ 100,00')
+            expect(page).not_to have_content(@project_application2.motivation)
+            expect(page).not_to have_content(@project_application2.weekly_hours)
+            expect(page).not_to have_content(@project_application2.expected_conclusion)
+            expect(page).to have_content('R$ 150,00')
+        end
+    end
 end

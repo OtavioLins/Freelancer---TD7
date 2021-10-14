@@ -1,6 +1,7 @@
 <h3 align="center"> Meus projetos </h3>
 
-<p align="center"> Aqui se encontra a lista de todos os projetos que você já cadastrou em nossa plataforma! </p>
+<p align="center"> Aqui se encontra a lista de todos os projetos que você já cadastrou em nossa plataforma! Para ver as propostas
+feitas para cada um deles, clique sobre seu título. </p>
 <hr>
 
 <p> <%= 'Nenhum projeto cadastrado' if @projects.empty? %></p>
@@ -10,4 +11,9 @@
     - Descrição: <%= project.description%> <BR>
     - Habilidades buscadas: <%= project.skills %></p>
     - Status: <%= project.status%>
-   <%end%></p>
+    <% if project.project_applications.count == 0%>
+        - Esse projeto ainda não recebeu propostas
+    <% else %>
+        - Propostas para esse projeto: <%= project.project_applications.count%>
+    <% end %>
+    <%end%></p>
