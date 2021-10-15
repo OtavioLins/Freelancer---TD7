@@ -10,7 +10,7 @@ basta clicar sobre seu nome</p>
        - Valor que espera receber por hora: <%= number_to_currency(application.expected_payment)%><BR>
        - Horas semanais que pretende trabalhar no projeto: <%= application.weekly_hours %><BR>
        - Status: <%=ProjectApplication.enum_translation(:situation, application.situation) %><BR>
-       <% if application.analysis?%>
+       <% if application.analysis? and @project.user == current_user %>
         <%=link_to 'Aceitar proposta', accept_project_application_path(application.id), method: :post%> ||
         <%=link_to 'Rejeitar proposta', reject_justification_project_application_path(application.id)%>
        <% end %></p>

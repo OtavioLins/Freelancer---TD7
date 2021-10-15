@@ -316,7 +316,7 @@ describe 'Projects application:' do
                                        description: 'Profissional em mud...', professional: @professional2) 
             @project_application1 = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
                                         weekly_hours: 10, expected_payment: 100, project: @project1, professional: @professional,
-                                        situation: :rejected)
+                                        situation: :rejected, reject_message: 'Não quis')
             @project_application2 = ProjectApplication.create!(motivation: 'Trabalhava como ...', expected_conclusion: '3 semanas',
                                         weekly_hours: 15, expected_payment: 150, project: @project2, professional: @professional,
                                         situation: :accepted)
@@ -406,6 +406,32 @@ describe 'Projects application:' do
         end
 
         it 'cannot reject an application without giving feedback' do
+            @user = User.create!(email: 'otavio@user.com', password: '123131')
+            @project = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 20.days.from_now, work_regimen: :remote,
+                                       hour_value: 300, user: @user, status: :open)        
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional)
+            @project_application = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
+                                        weekly_hours: 10, expected_payment: 100, project: @project, professional: @professional,
+                                        situation: :analysis)
+
+            login_as @user, scope: :user
+            visit root_path
+            click_on 'Meus projetos'
+            click_on 'Sistema de aluguel de imóveis'
+            click_on 'Ver propostas para esse projeto'
+            click_on 'Rejeitar proposta'
+            click_on 'Rejeitar proposta' 
+            
+            expect(@project_application.rejected?).to eq(false)
+            expect(page).to have_content('Motivo é obrigatório(a)')
         end
     end
 end

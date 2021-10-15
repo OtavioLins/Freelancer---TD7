@@ -15,7 +15,6 @@ describe ProjectApplication do
             expect(@project_application.errors.full_messages_for(:expected_payment)).to include(
             'Valor que espera receber por hora é obrigatório(a)')
         end
-
         it 'Creation - expected_payment and weekly_hours must be numbers' do
             @user = User.create!(email: 'otavio@user.com', password: '123131')
             @project = Project.create!(title: 'Sistema de aluguel de imóveis',

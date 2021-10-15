@@ -6,6 +6,7 @@ class ProjectApplication < ApplicationRecord
   validates :motivation, :weekly_hours, :expected_conclusion, :expected_payment, presence: {message: 'é obrigatório(a)'}
   validates :weekly_hours, :expected_payment, numericality: {greater_than: 0, message: 'deve ser um número positivo'}
   validate :max_value
+  validate :rejection
 
   private
 
@@ -15,4 +16,7 @@ class ProjectApplication < ApplicationRecord
     end
   end
 
+  def rejection
+    errors.add(:reject_message, 'é obrigatório(a)') if (self.rejected? and reject_message.blank?)
+  end
 end

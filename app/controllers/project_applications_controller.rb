@@ -1,10 +1,11 @@
 class ProjectApplicationsController < ApplicationController
-    before_action :authenticate_professional!, only: [:create, :my_applications]
+    before_action :authenticate_professional!, only: [:cancel, :cancelation_justification, :create, :my_applications]
+    before_action :authenticate_user!, only: [:accept, :index, :reject, :reject_justification]
 
     def accept
         @project_application = ProjectApplication.find(params[:id])
-        @project_application.accepted!
         @project_application.acceptance_date = Date.today
+        @project_application.accepted!
         redirect_to project_project_applications_path(@project_application.project)
     end
 
@@ -50,9 +51,13 @@ class ProjectApplicationsController < ApplicationController
 
     def reject
         @project_application = ProjectApplication.find(params[:id])
-        @project_application.update(project_application_params)
-        @project_application.rejected!
-        redirect_to project_project_applications_path(@project_application.project), notice: 'Proposta rejeitada com sucesso'    
+        @project_application.situation = :rejected
+        if @project_application.update(project_application_params)
+            redirect_to project_project_applications_path(@project_application.project), notice: 'Proposta rejeitada com sucesso'    
+        else
+            @project_application.situation = :analysis
+            render :reject_justification
+        end
     end
 
     def reject_justification
