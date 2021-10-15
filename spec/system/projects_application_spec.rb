@@ -126,6 +126,44 @@ describe 'Projects application:' do
             expect(page).not_to have_content(@project_application2.expected_conclusion)
             expect(page).not_to have_content(@project_application2.weekly_hours)
         end
+
+        it 'view an recently rejected application and its feedback' do
+            @user = User.create!(email: 'otavio@user.com', password: '123131')
+            @project = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                       description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                       skills: 'Conhecimento em Rails, Web Design e segurança',
+                                       date_limit: 20.days.from_now, work_regimen: :remote,
+                                       hour_value: 300, user: @user, status: :open)        
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
+            @occupation_area = OccupationArea.create!(name: 'Dev')
+            @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
+                                       social_name: 'Otávio Augusto', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
+                                       educational_background: 'Matemático', occupation_area: @occupation_area,
+                                       description: 'Profissional em mud...', professional: @professional)
+            @project_application = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
+                                        weekly_hours: 10, expected_payment: 100, project: @project, professional: @professional,
+                                        situation: :analysis)
+
+            login_as @user, scope: :user
+            visit root_path
+            click_on 'Meus projetos'
+            click_on 'Sistema de aluguel de imóveis'
+            click_on 'Ver propostas para esse projeto'
+            click_on 'Rejeitar proposta'
+            fill_in 'Motivo', with: 'Não gostei do seu nome'
+            click_on 'Rejeitar proposta'
+            click_on 'Sair'
+            login_as @professional, scope: :professional
+            visit root_path
+            click_on 'Meus projetos'
+
+            expect(page).to have_content('- Porque se acha capaz de pegar esse projeto? Trabalhei em ...')
+            expect(page).to have_content('- Valor que espera receber por hora: R$ 100,00')
+            expect(page).to have_content('- Horas semanais que pretende trabalhar no projeto: 10 horas')
+            expect(page).to have_content('- Expectativa de conclusão: 1 mês')
+            expect(page).to have_content('- Status: Rejeitada')
+            expect(page).to have_content('- Motivo da rejeição: Não gostei do seu nome')
+        end
     end
     context 'User:' do
         it 'views the applications for his projects' do
@@ -284,9 +322,7 @@ describe 'Projects application:' do
             click_on 'Rejeitar proposta'
             
             expect(page).to have_content('Proposta rejeitada com sucesso')
-            expect(page).to have_content('Rejeitada')
-            expect(@project_application.reject_message).to eq('Não gostei do seu nome')
-            expect(@project_application.rejected?).to eq(true)
+            expect(page).to have_content('Status: Rejeitada')
         end
 
         it 'cannot reject an application without giving feedback' do

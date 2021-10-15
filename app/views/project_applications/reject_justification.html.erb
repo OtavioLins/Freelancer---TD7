@@ -2,7 +2,7 @@
 
 <p> Para rejeitar a proposta, preencha abaixo com o motivo da rejeição: </p>
 
-<%= form_with(model: @project_application, url: reject_project_application_path, method: :post) do |form| %>
+<%= form_with(model: @project_application, url: reject_project_application_path) do |form| %>
     <%= form.label :reject_message %>
     <%= form.text_field :reject_message %>
     <%= form.submit 'Rejeitar proposta' %>

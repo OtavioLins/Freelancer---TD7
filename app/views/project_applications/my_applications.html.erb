@@ -10,6 +10,9 @@
         - Valor que espera receber por hora: <%=number_to_currency(application.expected_payment)%> <BR>
         - Horas semanais que pretende trabalhar no projeto: <%= application.weekly_hours %> horas <BR>
         - Expectativa de conclusão: <%= application.expected_conclusion%><BR>
-        - Status: <%= ProjectApplication.enum_translation(:situation, application.situation) %></p>
+        - Status: <%= ProjectApplication.enum_translation(:situation, application.situation) %><BR>
+        <% if application.rejected?%>
+            - Motivo da rejeição: <%= application.reject_message%><BR>
+        <% end %></p>
     <% end %>
 <%end%>

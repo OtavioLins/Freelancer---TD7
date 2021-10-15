@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get 'my_projects', on: :collection
     resources :project_applications, only: [:create, :index], shallow: :true do
       post 'accept', on: :member
-      post 'reject', on: :member
+      patch 'reject', on: :member
       get 'reject_justification', on: :member
     end
 

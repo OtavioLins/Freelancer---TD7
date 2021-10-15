@@ -35,7 +35,7 @@ class ProjectApplicationsController < ApplicationController
 
     def reject
         @project_application = ProjectApplication.find(params[:id])
-        @project_application.reject_message = params.require(:project_application).permit(:reject_message)
+        @project_application.update(project_application_params)
         @project_application.rejected!
         redirect_to project_project_applications_path(@project_application.project), notice: 'Proposta rejeitada com sucesso'    
     end
@@ -47,6 +47,6 @@ class ProjectApplicationsController < ApplicationController
     private
 
     def project_application_params
-        params.require(:project_application).permit(:motivation, :weekly_hours, :expected_conclusion, :expected_payment)
+        params.require(:project_application).permit(:reject_message, :motivation, :weekly_hours, :expected_conclusion, :expected_payment)
     end
 end
