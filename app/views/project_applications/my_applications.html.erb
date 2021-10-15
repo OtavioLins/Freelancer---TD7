@@ -13,6 +13,9 @@
         - Status: <%= ProjectApplication.enum_translation(:situation, application.situation) %><BR>
         <% if application.rejected?%>
             - Motivo da rejeição: <%= application.reject_message%><BR>
+        <% end %>
+        <% if application.analysis? or (application.accepted? and Date.today <= (application.acceptance_date + 3))%>
+            <%= link_to 'Cancelar proposta', cancelation_justification_project_application_path(application) %>
         <% end %></p>
     <% end %>
 <%end%>

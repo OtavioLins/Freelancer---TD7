@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       post 'accept', on: :member
       patch 'reject', on: :member
       get 'reject_justification', on: :member
+      patch 'cancel', on: :member
+      get 'cancelation_justification', on: :member
+
     end
 
   end

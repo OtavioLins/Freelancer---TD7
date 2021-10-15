@@ -10,8 +10,10 @@ pt-BR:
         weekly_hours: 'Horas semanais que pretende trabalhar no projeto'
         expected_payment: 'Valor que espera receber por hora'
         reject_message: 'Motivo'
+        cancelation_message: 'Justificativa'
         situation: 'Status'
         situations:
           analysis: 'Em análise'
           accepted: 'Aceita'
           rejected: 'Rejeitada'
+          canceled: 'Cancelada'

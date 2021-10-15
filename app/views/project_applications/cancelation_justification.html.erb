@@ -1,0 +1,9 @@
+<h3> Cancelar proposta </h3>
+
+<p> Para cancelar a proposta, preencha abaixo com o motivo do cancelamento. </p>
+
+<%= form_with(model: @project_application, url: cancel_project_application_path) do |form| %>
+    <%= form.label :cancelation_message %>
+    <%= form.text_field :cancelation_message %>
+    <%= form.submit 'Cancelar proposta' %>
+<% end %>

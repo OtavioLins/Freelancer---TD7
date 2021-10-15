@@ -4,14 +4,29 @@ class ProjectApplicationsController < ApplicationController
     def accept
         @project_application = ProjectApplication.find(params[:id])
         @project_application.accepted!
+        @project_application.acceptance_date = Date.today
         redirect_to project_project_applications_path(@project_application.project)
+    end
+
+    def cancel
+        @project_application = ProjectApplication.find(params[:id])
+        @project_application.update(project_application_params)
+        @project_application.canceled!
+        redirect_to my_applications_path, notice: 'Proposta cancelada com sucesso'
+    end
+
+    def cancelation_justification
+        @project_application = ProjectApplication.find(params[:id])
+        if @project_application.analysis?
+            @project_application.canceled!
+            redirect_to my_applications_path, notice: 'Proposta cancelada com sucesso'
+        end
     end
     
     def create
         @project_application = ProjectApplication.new(project_application_params)
         @project_application.professional = current_professional
         @project_application.project = Project.find(params[:project_id])
-        @project_application.reject_message = ''
         if @project_application.save
             redirect_to my_applications_path, notice: 'Proposta enviada com sucesso'
         else
@@ -47,6 +62,6 @@ class ProjectApplicationsController < ApplicationController
     private
 
     def project_application_params
-        params.require(:project_application).permit(:reject_message, :motivation, :weekly_hours, :expected_conclusion, :expected_payment)
+        params.require(:project_application).permit(:reject_message, :cancelation_message, :motivation, :weekly_hours, :expected_conclusion, :expected_payment)
     end
 end
