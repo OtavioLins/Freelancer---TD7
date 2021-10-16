@@ -57,7 +57,11 @@ class ProjectsController < ApplicationController
             end
         end        
         @project_application = ProjectApplication.new
+    end
 
+    def team
+        @project = Project.find(params[:id])
+        @project_applications = ProjectApplication.where(project_id: (params[:id]), situation: :accepted)
     end
 
     private

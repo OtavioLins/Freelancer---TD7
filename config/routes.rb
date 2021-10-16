@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'search', on: :collection
     get 'my_projects', on: :collection
     get 'early_closing', on: :member
+    get 'team', on: :member
     patch 'closing', on: :member
     resources :project_applications, only: [:create, :index], shallow: :true do
       post 'accept', on: :member

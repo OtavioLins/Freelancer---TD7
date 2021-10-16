@@ -1,0 +1,11 @@
+<h3 align="center"> Time para <%=@project.title%> </h3>
+
+Dono do projeto: <%= @project.user.email %>
+
+<% @project_applications.each do |application|%>
+    <% @profile = Profile.where(professional: application.professional).first %>
+    <p>- Profissional: <%=link_to @profile.social_name, @profile%><BR>
+       - Área de atuação: <%= @profile.occupation_area.name %><BR>
+       - Descrição: <%= @profile.description %>
+<%end%></p>
+

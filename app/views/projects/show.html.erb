@@ -25,12 +25,16 @@
 
 <% if current_user and current_user.email == @project.user.email%>
   <%= link_to 'Editar dados do projeto' %> ||
-  <%= link_to 'Ver propostas para esse projeto', project_project_applications_path(@project) %> 
+  <%= link_to 'Ver propostas para esse projeto', project_project_applications_path(@project) %> ||
+  <%= link_to 'Visualizar time do projeto', team_project_path(@project) %>
 <% end %>
 
 <% if current_professional %>
-  <% if ProjectApplication.where(professional: current_professional, project: @project).any? %>
+  <% application = ProjectApplication.where(professional: current_professional, project: @project).first%>
+  <% if (not application.nil?) and (not application.accepted?) %>
     Você já fez uma proposta para esse projeto.
+  <%elsif (not application.nil?) and application.accepted? %>
+    Você foi selecionado para compor o time desse projeto. Para visualizar os outros profissionais, <%= link_to 'Clique aqui', team_project_path(@project)%>
   <% else %>
     <hr>
     <h3 align="center"> Enviar uma proposta para esse projeto. </h3>
