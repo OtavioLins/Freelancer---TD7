@@ -11,9 +11,13 @@ class ProjectApplicationsController < ApplicationController
 
     def cancel
         @project_application = ProjectApplication.find(params[:id])
-        @project_application.update(project_application_params)
-        @project_application.canceled!
-        redirect_to my_applications_path, notice: 'Proposta cancelada com sucesso'
+        @project_application.situation = :canceled
+        if @project_application.update(project_application_params)
+            redirect_to my_applications_path, notice: 'Proposta cancelada com sucesso'
+        else
+            @project_application.situation = :analysis
+            render :cancelation_justification
+        end
     end
 
     def cancelation_justification

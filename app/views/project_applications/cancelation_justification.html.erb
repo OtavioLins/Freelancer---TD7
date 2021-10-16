@@ -5,5 +5,6 @@
 <%= form_with(model: @project_application, url: cancel_project_application_path) do |form| %>
     <%= form.label :cancelation_message %>
     <%= form.text_field :cancelation_message %>
+    <li><FONT COLOR="#ff0000"><%= @project_application.errors.full_messages_for(:cancelation_message).to_sentence if (not @project_application.nil?) and (@project_application.errors.any?) %></li></FONT>
     <%= form.submit 'Cancelar proposta' %>
 <% end %>

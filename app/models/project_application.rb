@@ -7,8 +7,14 @@ class ProjectApplication < ApplicationRecord
   validates :weekly_hours, :expected_payment, numericality: {greater_than: 0, message: 'deve ser um número positivo'}
   validate :max_value
   validate :rejection
-
+  validate :cancelation
   private
+
+  def cancelation
+    if (not self.acceptance_date.nil?) and Date.today <= (self.acceptance_date + 3)
+      errors.add(:cancelation_message, 'é obrigatório(a)') if (self.canceled? and cancelation_message.blank?)
+    end
+  end
 
   def max_value
     if (not expected_payment.nil?) and Project.where(project_applications: self).first.hour_value < expected_payment
