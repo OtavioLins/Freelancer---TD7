@@ -1,0 +1,6 @@
+<h3 align="center"> Confirmação de fechamento de propostas antecipado para <%= @project.title%><h3>
+
+<p> Saiba que, ao fechar o envio de propostas para esse projeto, todas as propostas que estão pendentes
+serão imediatamente rejeitadas. Apenas faça isso se tiver certeza que já fechou seu time. </p>
+
+<%= link_to 'Confirmar', closing_project_path(@project), method: :patch%>

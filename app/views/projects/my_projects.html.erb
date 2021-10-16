@@ -16,5 +16,5 @@ feitas para cada um deles, clique sobre seu título. </p>
     <% else %>
         - Propostas para esse projeto: <%= project.project_applications.count%>
     <% end %>
-    
+    - <%= link_to 'Encerrar recebimento de propostas', early_closing_project_path(project) %>
     <%end%></p>

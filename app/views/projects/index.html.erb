@@ -5,6 +5,12 @@ Caso queira, pode filtrá-los de acordo com alguma palavra chave. Para visualiza
 detalhes de cada projeto e se candidatar a eles, basca clicar sobre seu título. </p>
 <hr>
 <h3 align="center"> Filtrar projetos por uma palavra chave </h3>
+
+<%=form_with url: search_projects_path, method: :get do |form| %>
+    <%= form.label :text, 'Texto que deseja buscar'%>
+    <%= form.text_field :text%>
+    <%= form.submit 'Buscar'%>
+<%end%>
 <hr>
 <p> A seguir, temos uma lista de todos os projetos disponíveis em nossa plataforma: </p>
 

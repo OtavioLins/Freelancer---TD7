@@ -6,14 +6,16 @@ Rails.application.routes.draw do
   resources :occupation_areas, only: [:show]
   resources :profiles, only: [:show, :new, :create, :edit, :update, :index]
   resources :projects, only: [:new, :create, :show, :index] do
+    get 'search', on: :collection
     get 'my_projects', on: :collection
+    get 'early_closing', on: :member
+    patch 'closing', on: :member
     resources :project_applications, only: [:create, :index], shallow: :true do
       post 'accept', on: :member
       patch 'reject', on: :member
       get 'reject_justification', on: :member
       patch 'cancel', on: :member
       get 'cancelation_justification', on: :member
-
     end
 
   end

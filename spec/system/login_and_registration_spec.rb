@@ -3,15 +3,15 @@ require 'rails_helper'
 describe 'login and registration:' do
     context 'User' do
         it 'logs in successfully' do
-            user = User.create!(email: 'otavio@user.com.br', password: '123456789')
+            @user = User.create!(email: 'otavio@user.com.br', password: '123456789')
         
             visit root_path
             click_on 'Entrar como usuário'
-            fill_in 'Email', with: user.email
-            fill_in 'Senha', with: user.password
+            fill_in 'Email', with: @user.email
+            fill_in 'Senha', with: @user.password
             click_on 'Entrar'
 
-            expect(page).to have_content(user.email)
+            expect(page).to have_content(@user.email)
             expect(page).to have_content('Login efetuado com sucesso')
             expect(page).to have_link('Meus projetos')
             expect(page).to have_link('Cadastrar um novo projeto')
@@ -113,9 +113,9 @@ describe 'login and registration:' do
         end
 
         it 'logs out' do
-            user = User.create!(email: 'otavio@user.com.br', password: '123456789')
+            @user = User.create!(email: 'otavio@user.com.br', password: '123456789')
 
-            login_as user, scope: :user
+            login_as @user, scope: :user
             visit root_path
             click_on 'Sair'
 
@@ -127,15 +127,15 @@ describe 'login and registration:' do
 
     context 'Professional' do
         it 'logs in successfully without an created profile' do
-            professional = Professional.create!(email: 'otavio@professional.com.br', password: '123456789')
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: '123456789')
             
             visit root_path
             click_on 'Entrar como profissional'
-            fill_in 'Email', with: professional.email
-            fill_in 'Senha', with: professional.password
+            fill_in 'Email', with: @professional.email
+            fill_in 'Senha', with: @professional.password
             click_on 'Entrar'
     
-            expect(page).to have_content(professional.email)
+            expect(page).to have_content(@professional.email)
             expect(page).to have_content('Crie seu perfil')
             expect(page).to have_content('Login efetuado com sucesso')
             expect(page).to have_link('Meu perfil')
@@ -247,9 +247,9 @@ describe 'login and registration:' do
         end
 
         it 'logs out' do
-            professional = Professional.create!(email: 'otavio@professional.com.br', password: '123456789')
+            @professional = Professional.create!(email: 'otavio@professional.com.br', password: '123456789')
 
-            login_as professional, scope: :professional
+            login_as @professional, scope: :professional
             visit root_path
             click_on 'Sair'
 

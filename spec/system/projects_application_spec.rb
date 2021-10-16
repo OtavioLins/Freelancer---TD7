@@ -102,9 +102,9 @@ describe 'Projects application:' do
                                        educational_background: 'Matemático', occupation_area: @occupation_area,
                                        description: 'Profissional em mud...', professional: @professional1)
             @profile2 = Profile.create!(birth_date: 18.years.ago, full_name: 'José Bezerra', 
-                                       social_name: 'Flynn Rider', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
-                                       educational_background: 'Matemático', occupation_area: @occupation_area,
-                                       description: 'Profissional em mud...', professional: @professional2)
+                                        social_name: 'Flynn Rider', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
+                                        educational_background: 'Matemático', occupation_area: @occupation_area,
+                                        description: 'Profissional em mud...', professional: @professional2)
             @project_application1 = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
                                                                weekly_hours: 10, expected_payment: 100, project: @project, professional: @professional1,
                                                                situation: :analysis)

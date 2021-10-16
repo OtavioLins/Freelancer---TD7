@@ -1,0 +1,11 @@
+<h3 align="center"> Resultado da busca por texto </h3>
+
+<p> <%= 'Nenhum projeto com as palavras especificadas' if @projects.empty? %></p>
+
+<p><% @projects.each do |project|%>
+    <p><%= link_to project.title, project%> <BR>
+    - Descrição: <%= project.description%> <BR>
+    - Habilidades buscadas: <%= project.skills %></p>
+   <%end%></p>
+
+<%= link_to 'Voltar', root_path%>
