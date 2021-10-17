@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     get 'my_projects', on: :collection
     get 'early_closing', on: :member
     get 'team', on: :member
+    get 'finishing_confirmation', on: :member
+    patch 'finish', on: :member
     patch 'closing', on: :member
     resources :project_applications, only: [:create, :index], shallow: :true do
       post 'accept', on: :member

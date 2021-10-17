@@ -29,6 +29,15 @@ class ProjectsController < ApplicationController
         @project = Project.find(params[:id])
     end
 
+    def finish
+        @project = Project.find(params[:id])
+        @project.finished!
+        redirect_to @project
+    end
+    def finishing_confirmation
+        @project = Project.find(params[:id])
+    end
+    
     def index
         @projects = Project.where(status: :open)
     end

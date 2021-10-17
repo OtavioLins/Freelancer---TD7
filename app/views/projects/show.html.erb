@@ -26,7 +26,8 @@
 <% if current_user and current_user.email == @project.user.email%>
   <%= link_to 'Editar dados do projeto' %> ||
   <%= link_to 'Ver propostas para esse projeto', project_project_applications_path(@project) %> ||
-  <%= link_to 'Visualizar time do projeto', team_project_path(@project) %>
+  <%= link_to 'Visualizar time do projeto', team_project_path(@project) %> ||
+  <%= (link_to 'Encerrar projeto', finish_project_path(@project)) if @project.closed? %>
 <% end %>
 
 <% if current_professional %>

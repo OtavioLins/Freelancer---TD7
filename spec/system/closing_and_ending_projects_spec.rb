@@ -110,5 +110,38 @@ describe 'Closing and ending projects' do
         end
     end
     context 'Ending:' do
+        it 'Declare a closed project as finished' do
+            @user = User.create!(email: 'otavio@user.com', password: '123131')
+            @project = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                    description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                    skills: 'Conhecimento em Rails, Web Design e segurança',
+                                    date_limit: 20.days.from_now, work_regimen: :remote,
+                                    hour_value: 300, user: @user, status: :open)
+
+            login_as @user, scope: :user
+            visit root_path
+            click_on 'Meus projetos'
+            click_on 'Encerrar recebimento de propostas'
+            click_on 'Confirmar'
+            click_on 'Encerrar projeto'
+            click_on 'Confirmar'
+
+            expect(page).to have_content('Status do projeto: Encerrado')
+        end
+
+        it 'cant see the finish link if project isnt closed' do
+            @user = User.create!(email: 'otavio@user.com', password: '123131')
+            @project = Project.create!(title: 'Sistema de aluguel de imóveis',
+                                    description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
+                                    skills: 'Conhecimento em Rails, Web Design e segurança',
+                                    date_limit: 20.days.from_now, work_regimen: :remote,
+                                    hour_value: 300, user: @user, status: :open)
+
+            login_as @user, scope: :user
+            visit root_path
+            click_on 'Meus projetos'
+            
+            expect(page).not_to have_link('Encerrar projeto')
+        end
     end
 end

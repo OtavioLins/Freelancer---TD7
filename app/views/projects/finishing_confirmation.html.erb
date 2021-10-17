@@ -1,0 +1,5 @@
+<h3 align="center"> Confirmar encerramento do projeto <%@project.title%> <h3>
+
+<p> Clique em confirmar abaixo para encerrar esse projeto. Essa ação não pode ser desfeita. </p>
+
+<%= link_to 'Confirmar', finish_project_path(@project), method: :patch%>
