@@ -236,7 +236,7 @@ describe 'Projects application:' do
                                        description: 'Profissional em mud...', professional: @professional)
             @project_application = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
                                         weekly_hours: 10, expected_payment: 100, project: @project, professional: @professional,
-                                        situation: :accepted, acceptance_date: 4.days.ago)
+                                        situation: :accepted, acceptance_date: 5.days.ago)
 
             login_as @professional, scope: :professional
             visit root_path
