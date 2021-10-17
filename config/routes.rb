@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :occupation_areas, only: [:show]
+  resources :professionals do
+    resources :user_feedbacks, only: [:create, :new], shallow: :true
+  end
   resources :profiles, only: [:show, :new, :create, :edit, :update, :index]
   resources :projects, only: [:new, :create, :show, :index] do
     get 'search', on: :collection
@@ -20,7 +23,6 @@ Rails.application.routes.draw do
       patch 'cancel', on: :member
       get 'cancelation_justification', on: :member
     end
-
   end
   get 'my_applications', to: 'project_applications#my_applications'
 end

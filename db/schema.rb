@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_15_174833) do
+ActiveRecord::Schema.define(version: 2021_10_17_191100) do
 
   create_table "occupation_areas", force: :cascade do |t|
     t.string "name"
@@ -76,6 +76,17 @@ ActiveRecord::Schema.define(version: 2021_10_15_174833) do
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
+  create_table "user_feedbacks", force: :cascade do |t|
+    t.integer "grade"
+    t.string "comment"
+    t.integer "professional_id", null: false
+    t.integer "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["professional_id"], name: "index_user_feedbacks_on_professional_id"
+    t.index ["project_id"], name: "index_user_feedbacks_on_project_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -93,4 +104,6 @@ ActiveRecord::Schema.define(version: 2021_10_15_174833) do
   add_foreign_key "project_applications", "professionals"
   add_foreign_key "project_applications", "projects"
   add_foreign_key "projects", "users"
+  add_foreign_key "user_feedbacks", "professionals"
+  add_foreign_key "user_feedbacks", "projects"
 end

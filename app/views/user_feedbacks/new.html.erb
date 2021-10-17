@@ -1,0 +1,17 @@
+<h3 align="center"> Dar feedback para <%= @professional.profile.social_name %><h3>
+
+<%= form_with model: [@professional, @user_feedback] do |f| %>
+<div>
+    <%= f.label :grade %>
+    <%= f.number_field :grade %>
+    <li><FONT COLOR="#ff0000"><%= @user_feedback.errors.full_messages_for(:grade).to_sentence if (not @user_feedback.nil?) and (@user_feedback.errors.any?) %></li></FONT>
+</div>
+
+<div>
+    <%= f.label :comment %>
+    <%= f.text_field :comment %>
+    <li><FONT COLOR="#ff0000"><%= @user_feedback.errors.full_messages_for(:comment).to_sentence if (not @user_feedback.nil?) and (@user_feedback.errors.any?) %></li></FONT>
+</div>
+
+    <%= f.submit 'Enviar feedback' %>
+<%end%>
