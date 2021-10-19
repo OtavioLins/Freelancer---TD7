@@ -1,0 +1,8 @@
+<h3 align="center"> Feedbacks de <%= @professional.profile.social_name %><h3>
+
+<% @professional.user_feedbacks.each do |feedback| %>
+    <p>- Projeto: <%= feedback.project.title %><BR>
+    - Dono do projeto: <%= feedback.user.email %><BR>
+    - Nota: <%= feedback.grade %><BR>
+    - Comentário: <%= feedback.comment %><p>
+<% end %>

@@ -22,7 +22,7 @@
 
   <dt>Média dos feedbacks recebidos:</dt>
   <dd><%= @average %></dd>
-  <p><%= link_to 'Ver feedbacks desse profissional' if @average.class == Integer %></p>
+  <p><%= link_to 'Ver feedbacks desse profissional', feedbacks_received_by_users_professional_path(@profile.professional) if @average.class == Integer %></p>
 
 </dl>
   <%= (link_to 'Atualizar perfil', edit_profile_path(@profile)) if (current_professional and current_professional == @profile.professional)%>

@@ -10,6 +10,8 @@ class UserFeedbacksController < ApplicationController
         if @user_feedback.save
             redirect_to @user_feedback.professional.profile
         else
+            @professional = @user_feedback.professional
+            @project = @user_feedback.project
             render :new
         end
     end

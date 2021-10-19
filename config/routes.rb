@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :occupation_areas, only: [:show]
+  resources :professionals, only: [] do
+    get 'feedbacks_received_by_users', on: :member
+  end
   resources :profiles, only: [:show, :new, :create, :edit, :update, :index]
   resources :projects, only: [:new, :create, :show, :index] do
     get 'search', on: :collection

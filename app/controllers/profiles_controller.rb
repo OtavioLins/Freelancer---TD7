@@ -60,7 +60,7 @@ class ProfilesController < ApplicationController
     private
 
     def authenticate_any
-        current_user.present? || current_professional.present?
+        redirect_to root_path if not (current_user.present? || current_professional.present?)
     end
 
     def authenticate_current_professional(profile)
