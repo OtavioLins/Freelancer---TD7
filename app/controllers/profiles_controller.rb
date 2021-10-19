@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
         @profile = Profile.new(profile_params)
         @profile.professional = current_professional
         if @profile.save
-            redirect_to @profile
+            redirect_to @profile, notice: 'Perfil criado com sucesso! Agora você pode ter acesso a diversas partes de nossa plataforma'
         else
             render :new
         end
@@ -16,6 +16,7 @@ class ProfilesController < ApplicationController
 
     def edit
         @profile = Profile.find(params[:id])
+        authenticate_current_professional(@profile)
         @occupation_areas = OccupationArea.all
     end
 
@@ -33,22 +34,23 @@ class ProfilesController < ApplicationController
         if current_professional
             if current_professional.profile.valid?
                 @profile = Profile.find(params[:id])
-                @average = average_grade(@profile.professional)
-                @projects = get_projects(@profile.professional)            
+                @average = @profile.professional.average_grade
+                @projects = @profile.professional.finished_and_accepted_projects          
             else
                 redirect_to new_profile_path
             end
         elsif current_user
             @profile = Profile.find(params[:id])
-            @average = average_grade(@profile.professional)
-            @projects = get_projects(@profile.professional)            
+            @average = @profile.professional.average_grade
+            @projects = @profile.professional.finished_and_accepted_projects
         end
     end
 
     def update
         @profile = Profile.find(params[:id])
+        authenticate_current_professional(@profile)
         if @profile.update(profile_params) 
-            redirect_to @profile
+            redirect_to @profile, notice: 'Perfil atualizado com sucesso!'
         else
             @occupation_areas = OccupationArea.all
             render :edit
@@ -57,32 +59,19 @@ class ProfilesController < ApplicationController
 
     private
 
-    def average_grade(professional)
-        return 'Esse profissional ainda não recebeu nenhum feedback' if professional.user_feedbacks.count == 0
-        average = 0
-        professional.user_feedbacks.each do |feedback|
-            average += feedback.grade
-        end
-        average/professional.user_feedbacks.count 
+    def authenticate_any
+        current_user.present? || current_professional.present?
     end
 
-    def get_projects(professional)
-        projects = []
-        professional.projects.each do |l|
-            application = l.project_applications.find_by(professional: professional)
-            projects << l if l.finished? and application.accepted?
-        end 
-        return 'Esse profissional ainda não atuou em nenhum projeto' if projects.blank?
-        projects
+    def authenticate_current_professional(profile)
+        if current_professional && current_professional != profile.professional
+            redirect_to projects_path, alert: 'Você não tem permissão para realizar essa ação'
+        end
     end
 
     def profile_params
         params.require(:profile).permit(:full_name, :description,
                                 :social_name, :birth_date, :occupation_area_id, 
                                 :educational_background, :prior_experience)
-    end
-
-    def authenticate_any
-        current_user.present? || current_professional.present?
     end
 end

@@ -33,5 +33,8 @@ describe 'Feedbacks' do
             expect(page).to have_content('Média dos feedbacks recebidos: 4')
             expect(page).to have_link('Ver feedbacks desse profissional')
         end
+
+        it 'tries do give feedback to a professional after a project is finished, but leave fields blank' do
+        end
     end
 end

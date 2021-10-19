@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
     
     def closing
         @project = Project.find(params[:id])
+        authenticate_current_user(@project)
         @project.closed!
         @project.project_applications.where(situation: :analysis).each do |application|
             application.reject_message = 'Esse projeto está agora fechado para propostas'
@@ -19,7 +20,7 @@ class ProjectsController < ApplicationController
         @project.user = current_user
         @project.status = 'open'
         if @project.save
-            redirect_to @project
+            redirect_to @project, notice: 'Projeto criado com sucesso'
         else
             render :new
         end
@@ -27,16 +28,19 @@ class ProjectsController < ApplicationController
     
     def early_closing
         @project = Project.find(params[:id])
+        authenticate_current_user(@project)
     end
 
     def finish
         @project = Project.find(params[:id])
+        authenticate_current_user(@project)
         @project.finished!
         redirect_to @project
     end
 
     def finishing_confirmation
         @project = Project.find(params[:id])
+        authenticate_current_user(@project)
     end
     
     def index
@@ -78,6 +82,12 @@ class ProjectsController < ApplicationController
 
     def authenticate_any
         current_user.present? || current_professional.present?
+    end
+
+    def authenticate_current_user(project)
+        if current_user && current_user != project.user
+            redirect_to profiles_path, alert: 'Você não tem permissão para realizar essa ação'
+        end
     end
 
     def check_status!
