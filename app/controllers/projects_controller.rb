@@ -1,8 +1,8 @@
 class ProjectsController < ApplicationController
-    before_action :authenticate_user!, only: [:create, :new, :my_projects]
-    before_action :authenticate_professional!, only: [:index]
-    before_action :authenticate_any, only: [:show]
-    before_action :check_status!, only: [:index, :my_projects, :show]
+    before_action :authenticate_user!, only: %i[create new my_projects]
+    before_action :authenticate_professional!, only: %i[index]
+    before_action :authenticate_any, only: %i[show]
+    before_action :check_status!, only: %i[index my_projects show]
     
     def closing
         @project = Project.find(params[:id])
@@ -34,6 +34,7 @@ class ProjectsController < ApplicationController
         @project.finished!
         redirect_to @project
     end
+
     def finishing_confirmation
         @project = Project.find(params[:id])
     end
@@ -59,9 +60,9 @@ class ProjectsController < ApplicationController
         if current_professional
             redirect_to new_profile_path if current_professional.profile.invalid?
             if @project.closed? or @project.finished?
-                @project_application = ProjectApplication.where(professional: current_professional, project: @project).first            
-                if (not @project_application.nil?) and (not @project_application.accepted?)
-                    redirect_to my_applications_path, notice: 'Você não tem mais acesso a esse projeto' 
+                @project_application = ProjectApplication.find_by(professional: current_professional, project: @project)
+                if @project_application and (not @project_application.accepted?)
+                    redirect_to my_applications_path, alert: 'Você não tem mais acesso a esse projeto'
                 end
             end
         end        

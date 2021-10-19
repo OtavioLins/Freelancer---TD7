@@ -1,6 +1,6 @@
 <h3 align="center"> Dar feedback para <%= @professional.profile.social_name %><h3>
 
-<%= form_with model: [@professional, @user_feedback] do |f| %>
+<%= form_with model: [@project, @professional, @user_feedback] do |f| %>
 <div>
     <%= f.label :grade %>
     <%= f.number_field :grade %>

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Feedbacks' do
     context 'User:' do
-        xit 'gives feedback to a professional after a project is finished' do
+        it 'gives feedback to a professional after a project is finished' do
             @user = User.create!(email: 'otavio@user.com', password: '123131')
             @project = Project.create!(title: 'Sistema de aluguel de imóveis',
                                     description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',

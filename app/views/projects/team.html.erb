@@ -6,7 +6,6 @@ Dono do projeto: <%= @project.user.email %>
     <% @profile = Profile.where(professional: application.professional).first %>
     <p>- Profissional: <%=link_to @profile.social_name, @profile%><BR>
        - Área de atuação: <%= @profile.occupation_area.name %><BR>
-       - Descrição: <%= @profile.description %>
-       <%= (link_to 'Dar feedback para esse profissional', new_professional_user_feedback_path(@profile.professional)) if current_user == @project.user and @project.finished? %>
+       - Descrição: <%= @profile.description %><BR>
+       <%= (link_to 'Dar feedback para esse profissional', new_project_professional_user_feedback_path(@project, @profile.professional)) if current_user == @project.user and @project.finished? %>
 <%end%></p>
-

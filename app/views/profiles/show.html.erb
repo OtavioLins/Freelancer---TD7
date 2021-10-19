@@ -19,13 +19,18 @@
 
   <dt>Email:</dt>
   <dd><%= @profile.professional.email %></dd>
+
+  <dt>Média dos feedbacks recebidos:</dt>
+  <dd><%= @average %></dd>
+  <p><%= link_to 'Ver feedbacks desse profissional' if @average.class == Integer %></p>
+
 </dl>
   <%= (link_to 'Atualizar perfil', edit_profile_path(@profile)) if (current_professional and current_professional == @profile.professional)%>
 </div>
 
 <h4 align="center"> Projetos em que já atuou </h4>
 <p>
-  <% if not @projects.nil? %>
+  <% if @projects.class == Array %>
       <% @projects.each do |project| %>
         <%= link_to project.title, project %>
         Dono do projeto: <%= project.user.email %>
