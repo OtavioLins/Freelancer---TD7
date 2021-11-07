@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
             stored_location_for(resource) || root_path
         end
     end
+
+    def authenticate_any
+        redirect_to root_path if not (current_user.present? || current_professional.present?)
+    end
 end

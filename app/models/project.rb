@@ -18,7 +18,7 @@ class Project < ApplicationRecord
 
   def date_limit_cant_be_in_the_past
     if date_limit and Date.today > date_limit
-        errors.add(:date_limit, 'não pode ser no passado')
+      errors.add(:date_limit, 'não pode ser no passado')
     end
   end
 end

@@ -30,6 +30,7 @@ class UserFeedbacksController < ApplicationController
             redirect_to profiles_path, alert: 'Você não tem permissão para realizar essa ação'
         end
     end
+    
     def user_feedback_params
         params.require(:user_feedback).permit(:grade, :comment)
     end

@@ -80,10 +80,6 @@ class ProjectsController < ApplicationController
 
     private
 
-    def authenticate_any
-        redirect_to root_path if not (current_user.present? || current_professional.present?)
-    end
-
     def authenticate_current_user(project)
         if current_user && current_user != project.user
             redirect_to profiles_path, alert: 'Você não tem permissão para realizar essa ação'

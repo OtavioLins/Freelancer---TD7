@@ -12,7 +12,7 @@ class Profile < ApplicationRecord
 
   def must_be_over_18_years_old
     if birth_date and 18.years.ago < birth_date
-        errors.add(:birth_date, ': Profissional deve ser maior de 18 anos')
+      errors.add(:birth_date, ': Profissional deve ser maior de 18 anos')
     end
   end
 

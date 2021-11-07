@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-    before_action :authenticate_professional!, only: %i[create, edit, new, update]
+    before_action :authenticate_professional!, only: %i[create edit new update]
     before_action :authenticate_user!, only: %i[index]
     before_action :authenticate_any, only: %i[show]
     
@@ -58,10 +58,6 @@ class ProfilesController < ApplicationController
     end
 
     private
-
-    def authenticate_any
-        redirect_to root_path if not (current_user.present? || current_professional.present?)
-    end
 
     def authenticate_current_professional(profile)
         if current_professional && current_professional != profile.professional

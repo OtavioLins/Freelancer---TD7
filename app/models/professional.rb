@@ -9,21 +9,21 @@ class Professional < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   def average_grade
-      return 'Esse profissional ainda não recebeu nenhum feedback' if user_feedbacks.count == 0
-      average = 0
-      user_feedbacks.each do |feedback|
-          average += feedback.grade
-      end
-      average/user_feedbacks.count
+    return 'Esse profissional ainda não recebeu nenhum feedback' if user_feedbacks.count == 0
+    average = 0
+    user_feedbacks.each do |feedback|
+      average += feedback.grade
+    end
+    average/user_feedbacks.count
   end
 
   def finished_and_accepted_projects
-      projects = []
-      self.projects.each do |l|
-          application = l.project_applications.find_by(professional: self)
-          projects << l if l.finished? and application.accepted?
-      end
-      return 'Esse profissional ainda não atuou em nenhum projeto' if projects.blank?
-      projects
+    projects = []
+    self.projects.each do |l|
+      application = l.project_applications.find_by(professional: self)
+      projects << l if l.finished? and application.accepted?
+    end
+    return 'Esse profissional ainda não atuou em nenhum projeto' if projects.blank?
+    projects
   end
 end
