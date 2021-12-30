@@ -1,12 +1,14 @@
-class ProjectApplication < ApplicationRecord
+# frozen_string_literal: true
 
+class ProjectApplication < ApplicationRecord
   belongs_to :project
   belongs_to :professional
 
-  enum situation: {analysis: 0, accepted: 1, rejected: 2, canceled: 3}
+  enum situation: { analysis: 0, accepted: 1, rejected: 2, canceled: 3 }
 
-  validates :motivation, :weekly_hours, :expected_conclusion, :expected_payment, presence: {message: 'é obrigatório(a)'}
-  validates :weekly_hours, :expected_payment, numericality: {greater_than: 0, message: 'deve ser um número positivo'}
+  validates :motivation, :weekly_hours, :expected_conclusion, :expected_payment,
+            presence: { message: 'é obrigatório(a)' }
+  validates :weekly_hours, :expected_payment, numericality: { greater_than: 0, message: 'deve ser um número positivo' }
   validate :max_value
   validate :rejection
   validate :cancelation
@@ -14,8 +16,8 @@ class ProjectApplication < ApplicationRecord
   private
 
   def cancelation
-    if acceptance_date && Date.today <= (acceptance_date + 3)
-      errors.add(:cancelation_message, 'é obrigatório(a)') if (self.canceled? and cancelation_message.blank?)
+    if acceptance_date && Date.today <= (acceptance_date + 3) && (canceled? && cancelation_message.blank?)
+      errors.add(:cancelation_message, 'é obrigatório(a)')
     end
   end
 
@@ -26,6 +28,6 @@ class ProjectApplication < ApplicationRecord
   end
 
   def rejection
-    errors.add(:reject_message, 'é obrigatório(a)') if (self.rejected? and reject_message.blank?)
+    errors.add(:reject_message, 'é obrigatório(a)') if rejected? && reject_message.blank?
   end
 end

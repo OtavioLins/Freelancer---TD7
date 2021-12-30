@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 describe 'Profile:' do
   context 'creation' do
@@ -31,7 +33,7 @@ describe 'Profile:' do
       expect(page).to have_content('Email: otavio@professional.com.br')
       expect(page).to have_link('Atualizar perfil')
     end
-        
+
     it 'after login in without a valid profile' do
       @professional = create(:professional)
 
@@ -43,7 +45,7 @@ describe 'Profile:' do
 
       expect(page).to have_content('Crie seu perfil')
     end
-        
+
     it 'after clicking on Meu perfil without a valid profile' do
       @professional = create(:professional)
 
@@ -77,9 +79,9 @@ describe 'Profile:' do
     it 'successfully' do
       @professional = create(:professional)
       @occupation_area = create(:occupation_area, name: 'Dev')
-      @profile = create(:profile, birth_date: 18.years.ago, full_name: 'Otávio Lins', 
-                        social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
-                        occupation_area: @occupation_area, professional: @professional)
+      @profile = create(:profile, birth_date: 18.years.ago, full_name: 'Otávio Lins',
+                                  social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                  occupation_area: @occupation_area, professional: @professional)
 
       login_as @professional, scope: :professional
       visit root_path
@@ -99,7 +101,7 @@ describe 'Profile:' do
     it 'Unsuccessful' do
       @professional = create(:professional)
       @profile = create(:profile, occupation_area: create(:occupation_area),
-                        professional: @professional)
+                                  professional: @professional)
 
       login_as @professional, scope: :professional
       visit root_path
@@ -122,13 +124,13 @@ describe 'Profile:' do
     it 'through Meu perfil' do
       @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
       @occupation_area = OccupationArea.create!(name: 'Dev')
-      @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
-                                  social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
-                                  educational_background: 'Matemático', occupation_area: @occupation_area,
-                                  description: 'Profissional em mud...', professional: @professional)
-      
+      @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins',
+                                 social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                 educational_background: 'Matemático', occupation_area: @occupation_area,
+                                 description: 'Profissional em mud...', professional: @professional)
+
       login_as @professional, scope: :professional
-      visit root_path 
+      visit root_path
       click_on 'Meu perfil'
 
       expect(page).to have_content('Perfil de Otávio')
@@ -140,16 +142,16 @@ describe 'Profile:' do
       expect(page).to have_content('Email: otavio@professional.com.br')
       expect(page).to have_link('Atualizar perfil')
     end
-    
+
     it 'through User homepage' do
       user = User.create!(email: 'otavio@user.com.br', password: '123456789')
       @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
       @occupation_area = OccupationArea.create!(name: 'Dev')
-      @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins', 
-                                  social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
-                                  educational_background: 'Matemático', occupation_area: @occupation_area,
-                                  description: 'Profissional em mud...', professional: @professional)
-      
+      @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins',
+                                 social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
+                                 educational_background: 'Matemático', occupation_area: @occupation_area,
+                                 description: 'Profissional em mud...', professional: @professional)
+
       login_as user, scope: :user
       visit root_path
       click_on @profile.social_name

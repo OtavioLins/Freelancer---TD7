@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProjectApplications < ActiveRecord::Migration[6.1]
   def change
     create_table :project_applications do |t|
