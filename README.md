@@ -12,3 +12,7 @@ No futuro, teremos:
 - Adicionar fotos ao perfil tanto do profissional quando do usuário.
 
 Para rodar essa aplicação, com exceção da gem devise, RSPec e Capybara, nenhuma gem adicional do foi necessária. Todas as informações sobre essas gems, versão do rails e banco de dados podem ser encontradas no Gemfile.
+
+Setup:
+
+Para rodar a aplicação, clone o repositório usando seu terminal com "git clone https://github.com/OtavioLins/Freelancer---TD7.git". Após a aplicação ter sido clonada, dentro da pasta do projeto, rode "sudo docker image build -t freelancer_image ." Isso deve criar um contêiner que é autosuficiente para que a aplicação funcione!. Depois que o contêiner for construído, basta rodar um "bin/setup" e, em seguida, "sudo docker run -it -v "$PWD":/opt/app freelancer_image bash".
