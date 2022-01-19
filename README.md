@@ -11,8 +11,27 @@ No futuro, teremos:
 - Marcar profissionais e donos de projeto como favoritos;
 - Adicionar fotos ao perfil tanto do profissional quando do usuário.
 
-Para rodar essa aplicação, com exceção da gem devise, RSPec e Capybara, nenhuma gem adicional do foi necessária. Todas as informações sobre essas gems, versão do rails e banco de dados podem ser encontradas no Gemfile.
 
 Setup:
 
-Para rodar a aplicação, clone o repositório usando seu terminal com "git clone https://github.com/OtavioLins/Freelancer---TD7.git". Após a aplicação ter sido clonada, dentro da pasta do projeto, rode "sudo docker image build -t freelancer_image ." Isso deve criar um contêiner que é autosuficiente para que a aplicação funcione!. Depois que o contêiner for construído, basta rodar um "bin/setup" e, em seguida, "sudo docker run -it -v "$PWD":/opt/app freelancer_image bash".
+Para rodar a aplicação:
+1. Clone o repositório, usando, em seu terminal, o comando: 
+  - git clone git@github.com:OtavioLins/Freelancer---TD7.git
+
+2. Migre para a pasta do repositório, com o comando:
+  - cd Freelancer---TD7
+
+3. Crie um conteiner com docker, usando o comando:
+  - docker-compose build
+
+4. Para interagir usando o terminal, rode o comando:
+  - docker-compose run --rm --service-ports web bash
+
+5. A partir daí:
+  5.1 Para rodar os testes, use o comando rspec
+  5.2 Para subir o servidos, use o comando rails s -b 0.0.0.0
+  5.3 Para acessar a página da web com a aplicação, cole no navegador localhost:3000/
+
+6. Se quiser subir a aplicação e não interagir com o internal, basta usar o seguinte comando logo após criar o container (para acessar a página da web, ver 5.3):
+  - docker-compose up
+

@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2021_10_18_202049) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "occupation_areas", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -37,8 +40,8 @@ ActiveRecord::Schema.define(version: 2021_10_18_202049) do
     t.string "description"
     t.string "prior_experience"
     t.date "birth_date"
-    t.integer "professional_id", null: false
-    t.integer "occupation_area_id", null: false
+    t.bigint "professional_id", null: false
+    t.bigint "occupation_area_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["occupation_area_id"], name: "index_profiles_on_occupation_area_id"
@@ -50,8 +53,8 @@ ActiveRecord::Schema.define(version: 2021_10_18_202049) do
     t.string "expected_conclusion"
     t.integer "weekly_hours"
     t.decimal "expected_payment"
-    t.integer "project_id", null: false
-    t.integer "professional_id", null: false
+    t.bigint "project_id", null: false
+    t.bigint "professional_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "situation", default: 0
@@ -69,7 +72,7 @@ ActiveRecord::Schema.define(version: 2021_10_18_202049) do
     t.decimal "hour_value"
     t.date "date_limit"
     t.integer "work_regimen", default: 0
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status", default: 0
@@ -79,11 +82,11 @@ ActiveRecord::Schema.define(version: 2021_10_18_202049) do
   create_table "user_feedbacks", force: :cascade do |t|
     t.integer "grade"
     t.string "comment"
-    t.integer "professional_id", null: false
-    t.integer "project_id", null: false
+    t.bigint "professional_id", null: false
+    t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["professional_id"], name: "index_user_feedbacks_on_professional_id"
     t.index ["project_id"], name: "index_user_feedbacks_on_project_id"
     t.index ["user_id"], name: "index_user_feedbacks_on_user_id"
