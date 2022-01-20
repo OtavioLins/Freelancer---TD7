@@ -25,7 +25,7 @@ Para rodar a aplicação:
   - docker-compose build
 
 4. Para interagir usando o terminal, rode o comando:
-  - docker-compose run --rm --service-ports web bash
+  - docker-compose run --rm --service-ports rails bash
 
 5. A partir daí:
   5.1 Para rodar os testes, use o comando rspec
@@ -34,4 +34,3 @@ Para rodar a aplicação:
 
 6. Se quiser subir a aplicação e não interagir com o internal, basta usar o seguinte comando logo após criar o container (para acessar a página da web, ver 5.3):
   - docker-compose up
-
