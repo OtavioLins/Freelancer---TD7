@@ -30,4 +30,10 @@ Rails.application.routes.draw do
     end
   end
   get 'my_applications', to: 'project_applications#my_applications'
+  
+  namespace :api do
+    namespace :v1 do
+      resources :projects, only: %i[index]
+    end
+  end
 end
