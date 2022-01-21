@@ -11,6 +11,7 @@ No futuro, teremos:
 - Marcar profissionais e donos de projeto como favoritos;
 - Adicionar fotos ao perfil tanto do profissional quando do usuário.
 
+No momento, a API ainda não está funcionando 100% naturalmente; por algum motivo, ao tentar consumir a API pela Freelancerconsumer, ela não reconhece o nome do container. A API só funciona pelo IP ou pelo nome específico acessado via terminal, mas o alias não. Estamos trabalhando em resolver isso!
 
 Setup:
 
