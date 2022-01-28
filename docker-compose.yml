@@ -16,9 +16,19 @@ services:
       - POSTGRES_HOST=db
     depends_on:
       - db
+      - redis
     networks:
       - freelancer
       - db_network
+      - redis_network
+  
+  redis:
+    command: "redis-server"
+    container_name: redis
+    restart: always
+    image: redis
+    networks:
+      - redis_network
 
   db:
     image: postgres:12-alpine
@@ -35,6 +45,9 @@ networks:
     external: true
   db_network:
     external: false
+  redis_network:
+    external: false
     
 volumes:
   freelancertd7_data:
+  redis:

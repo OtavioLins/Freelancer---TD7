@@ -39,6 +39,7 @@ class ProjectApplicationsController < ApplicationController
     @project_application.professional = current_professional
     @project_application.project = Project.find(params[:project_id])
     if @project_application.save
+      MailDeliveryJob.perform_later(@project_application.id)
       redirect_to my_applications_path, notice: 'Proposta enviada com sucesso'
     else
       @project = Project.find(params[:project_id])

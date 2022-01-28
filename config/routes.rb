@@ -1,10 +1,12 @@
-# frozen_string_literal: true
+require 'sidekiq/web'
 
 Rails.application.routes.draw do
   devise_for :professionals, path: 'professionals', controllers: { registrations: 'registrations' }
   devise_for :users, path: 'users'
   root to: 'home#index'
 
+  mount Sidekiq::Web => '/sidekiq'
+  
   resources :occupation_areas, only: [:show]
   resources :professionals, only: [] do
     get 'feedbacks_received_by_users', on: :member
