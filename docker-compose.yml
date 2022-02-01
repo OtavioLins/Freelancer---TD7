@@ -2,7 +2,7 @@ version: '3'
 services:
   rails:
     build: .
-    command: rails s -b 0.0.0.0
+    command: bash -c "bin/setup && rails server -b 0.0.0.0 -p 3000 -d && bundle exec sidekiq"
     container_name: freelancertd7
     ports:
       - 3000:3000
