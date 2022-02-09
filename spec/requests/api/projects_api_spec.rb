@@ -9,14 +9,9 @@ describe 'Projects exportation API' do
       project1 = create(:project)
       project2 = create(:project)
       project3 = create(:project, status: :finished)
+      token = JWT.encode({ api_client_id: client.id }, 's3cr3t')
 
-      post '/api/v1/login',
-           params: {
-             username: client.username,
-             password: client.password
-           }
-
-      get '/api/v1/projects', headers: { 'Authorization': "Bearer #{parsed_body[:token]}" }
+      get '/api/v1/projects', headers: { 'Authorization': "Bearer #{token}" }
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to include('application/json')
