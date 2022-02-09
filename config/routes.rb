@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
@@ -6,7 +8,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   mount Sidekiq::Web => '/sidekiq'
-  
+
   resources :occupation_areas, only: [:show]
   resources :professionals, only: [] do
     get 'feedbacks_received_by_users', on: :member
@@ -32,13 +34,13 @@ Rails.application.routes.draw do
     end
   end
   get 'my_applications', to: 'project_applications#my_applications'
-  
+
   namespace :api do
     namespace :v1 do
       resources :projects, only: %i[index]
       resources :api_clients, only: %i[create]
-      post '/login', to: "api_clients#login"
-      get '/auto_login', to: "api_clients#auto_login"
+      post '/login', to: 'api_clients#login'
+      get '/auto_login', to: 'api_clients#auto_login'
     end
   end
 end

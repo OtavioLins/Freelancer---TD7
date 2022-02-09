@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'API Clients' do
@@ -6,10 +8,10 @@ describe 'API Clients' do
       client = ApiClient.create!(username: 'testclient', password: '123321')
 
       post '/api/v1/login',
-        params: {
-          username: client.username,
-          password: client.password
-        }
+           params: {
+             username: client.username,
+             password: client.password
+           }
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to include('application/json')
@@ -19,12 +21,11 @@ describe 'API Clients' do
     end
 
     it 'should not login successfully because account not created' do
-
       post '/api/v1/login',
-        params: {
-          username: "testclient",
-          password: "123456"
-        }
+           params: {
+             username: 'testclient',
+             password: '123456'
+           }
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to include('application/json')
@@ -36,10 +37,10 @@ describe 'API Clients' do
       client = ApiClient.create!(username: 'testclient', password: '123321')
 
       post '/api/v1/login',
-        params: {
-          username: "testclient",
-          password: "123456"
-        }
+           params: {
+             username: 'testclient',
+             password: '123456'
+           }
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to include('application/json')
@@ -51,10 +52,10 @@ describe 'API Clients' do
       client = ApiClient.create!(username: 'testclient', password: '123321')
 
       post '/api/v1/login',
-        params: {
-          username: "testclienat",
-          password: client.password
-        }
+           params: {
+             username: 'testclienat',
+             password: client.password
+           }
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to include('application/json')
@@ -62,14 +63,13 @@ describe 'API Clients' do
       expect(client_info[:error]).to include('Invalid username or password')
     end
   end
-  context "POST /api/v1/api_clients" do
+  context 'POST /api/v1/api_clients' do
     it 'should create an api client successfully' do
-      
       post '/api/v1/api_clients',
-      params: {
-        username: 'otavioslins',
-        password: '123456789'
-      }
+           params: {
+             username: 'otavioslins',
+             password: '123456789'
+           }
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to include('application/json')

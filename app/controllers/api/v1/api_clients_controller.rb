@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class ApiClientsController < Api::V1::ApiController
@@ -7,10 +9,10 @@ module Api
       def create
         @api_client = ApiClient.create(api_client_params)
         if @api_client.valid?
-          token = encode_token({api_client_id: @api_client.id})
-          render json: {api_client: @api_client, token: token}
+          token = encode_token({ api_client_id: @api_client.id })
+          render json: { api_client: @api_client, token: token }
         else
-          render json: {error: "Invalid username or password"}
+          render json: { error: 'Invalid username or password' }
         end
       end
 
@@ -18,11 +20,11 @@ module Api
       def login
         @api_client = ApiClient.find_by(username: params[:username])
 
-        if @api_client && @api_client.authenticate(params[:password])
-          token = encode_token({api_client_id: @api_client.id})
-          render json: {api_client: @api_client, token: token}
+        if @api_client&.authenticate(params[:password])
+          token = encode_token({ api_client_id: @api_client.id })
+          render json: { api_client: @api_client, token: token }
         else
-          render json: {error: "Invalid username or password"}
+          render json: { error: 'Invalid username or password' }
         end
       end
 

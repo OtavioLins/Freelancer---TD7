@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'sidekiq/testing'
 Sidekiq::Testing.fake!
@@ -19,11 +21,11 @@ RSpec.describe MailDeliveryJob, type: :job do
                               description: 'Profissional em mud...', professional: professional)
 
     project_application = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
-                                                    weekly_hours: 10, expected_payment: 100, project: project, professional: professional,
-                                                    situation: :analysis)
+                                                     weekly_hours: 10, expected_payment: 100, project: project, professional: professional,
+                                                     situation: :analysis)
 
-    assert_equal 0, Sidekiq::Queues["default"].size
+    assert_equal 0, Sidekiq::Queues['default'].size
     MailDeliveryJob.perform_later(project_application.id)
-    assert_equal 1, Sidekiq::Queues["default"].size
+    assert_equal 1, Sidekiq::Queues['default'].size
   end
 end
