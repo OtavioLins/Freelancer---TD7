@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :api_client do
-    username { 'MyString' }
-    password_digest { 'MyString' }
+    sequence(:username) { |n| "TestClient #{n}" }
+    password { 'password' }
   end
 end

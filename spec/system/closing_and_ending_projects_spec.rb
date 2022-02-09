@@ -6,21 +6,11 @@ describe 'Closing and ending projects' do
   include ActiveSupport::Testing::TimeHelpers
   context 'Closing:' do
     it 'professional cant see a closed project on homepage' do
-      @user = User.create!(email: 'otavio@user.com', password: '123131')
-      @project = Project.create!(title: 'Sistema de aluguel de imóveis',
-                                 description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
-                                 skills: 'Conhecimento em Rails, Web Design e segurança',
-                                 date_limit: 20.days.from_now, work_regimen: :remote,
-                                 hour_value: 300, user: @user, status: :open)
-      @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
-      @occupation_area = OccupationArea.create!(name: 'Dev')
-      @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins',
-                                 social_name: 'Otávio Augusto', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
-                                 educational_background: 'Matemático', occupation_area: @occupation_area,
-                                 description: 'Profissional em mud...', professional: @professional)
+      create(:project, title: 'Sistema de aluguel de imóveis', date_limit: 20.days.from_now)
+      professional = create(:professional, complete_profile: true)
 
       travel_to 20.days.from_now do
-        login_as @professional, scope: :professional
+        login_as professional, scope: :professional
         visit root_path
       end
 
@@ -28,23 +18,13 @@ describe 'Closing and ending projects' do
     end
 
     it 'professional cant see a closed project through his applications if his application wasnt accepted' do
-      @user = User.create!(email: 'otavio@user.com', password: '123131')
-      @project = Project.create!(title: 'Sistema de aluguel de imóveis',
-                                 description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
-                                 skills: 'Conhecimento em Rails, Web Design e segurança',
-                                 date_limit: 20.days.from_now, work_regimen: :remote,
-                                 hour_value: 300, user: @user, status: :open)
-      @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
-      @occupation_area = OccupationArea.create!(name: 'Dev')
-      @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins',
-                                 social_name: 'Otávio Augusto', prior_experience: 'Trabalhei como desenvolvedor em rails numa startup X',
-                                 educational_background: 'Matemático', occupation_area: @occupation_area,
-                                 description: 'Profissional em mud...', professional: @professional)
-      @project_application = ProjectApplication.create!(motivation: 'Trabalhei em ...', expected_conclusion: '1 mês',
-                                                        weekly_hours: 10, expected_payment: 100, project: @project, professional: @professional,
-                                                        situation: :analysis)
+      project = create(:project, title: 'Sistema de aluguel de imóveis', date_limit: 20.days.from_now)
+      professional = create(:professional, complete_profile: true)
+      create(:project_application, project: project, professional: professional,
+                                   situation: :accepted)
+
       travel_to 20.days.from_now do
-        login_as @professional, scope: :professional
+        login_as professional, scope: :professional
         visit root_path
         click_on 'Meus projetos'
         click_on 'Sistema de aluguel de imóveis'

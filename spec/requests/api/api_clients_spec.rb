@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'API Clients' do
   context 'POST /api/v1/login' do
     it 'should login successfully and receive a token' do
-      client = ApiClient.create!(username: 'testclient', password: '123321')
+      client = create(:api_client)
 
       post '/api/v1/login',
            params: {
@@ -16,7 +16,7 @@ describe 'API Clients' do
       expect(response).to have_http_status(200)
       expect(response.content_type).to include('application/json')
       client_info = parsed_body
-      expect(client_info[:api_client][:api_client][:username]).to include('testclient')
+      expect(client_info[:api_client][:api_client][:username]).to include(client.username)
       expect(client_info[:api_client][:api_client][:token]).not_to eq('nil')
     end
 
@@ -34,11 +34,11 @@ describe 'API Clients' do
     end
 
     it 'should not login successfully because of wrong password' do
-      client = ApiClient.create!(username: 'testclient', password: '123321')
+      client = create(:api_client)
 
       post '/api/v1/login',
            params: {
-             username: 'testclient',
+             username: client.username,
              password: '123456'
            }
 
@@ -49,7 +49,7 @@ describe 'API Clients' do
     end
 
     it 'should not login successfully because of wrong username' do
-      client = ApiClient.create!(username: 'testclient', password: '123321')
+      client = create(:api_client)
 
       post '/api/v1/login',
            params: {
