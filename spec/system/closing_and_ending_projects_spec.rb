@@ -21,7 +21,7 @@ describe 'Closing and ending projects' do
       project = create(:project, title: 'Sistema de aluguel de imóveis', date_limit: 20.days.from_now)
       professional = create(:professional, complete_profile: true)
       create(:project_application, project: project, professional: professional,
-                                   situation: :accepted)
+                                   situation: :rejected)
 
       travel_to 20.days.from_now do
         login_as professional, scope: :professional

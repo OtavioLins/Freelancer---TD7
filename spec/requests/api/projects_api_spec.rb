@@ -4,11 +4,14 @@ require 'rails_helper'
 
 describe 'Projects exportation API' do
   context 'GET /api/v1/projects' do
-    it 'should get open projects' do
+    it 'should get open projects, their user and the project applications' do
+      professional = create(:professional, complete_profile: true)
       client = create(:api_client)
       project1 = create(:project)
       project2 = create(:project)
       project3 = create(:project, status: :finished)
+      application1 = create(:project_application, project: project1, professional: professional)
+      application2 = create(:project_application, project: project2, professional: professional)
       token = JWT.encode({ api_client_id: client.id }, 's3cr3t')
 
       get '/api/v1/projects', headers: { 'Authorization': "Bearer #{token}" }
@@ -16,8 +19,14 @@ describe 'Projects exportation API' do
       expect(response).to have_http_status(200)
       expect(response.content_type).to include('application/json')
       projects = response.parsed_body
-      expect(projects.first['project']['title']).to include(project1.title)
-      expect(projects.second['project']['title']).to include(project2.title)
+      expect(projects.first['title']).to include(project1.title)
+      expect(projects.first['user']['email']).to include(project1.user.email)
+      expect(projects.first['project_applications'].first['situation']).to include(application1.situation)
+      expect(projects.first['project_applications'].first['professional']['email']).to include(professional.email)
+      expect(projects.second['title']).to include(project2.title)
+      expect(projects.second['user']['email']).to include(project2.user.email)
+      expect(projects.second['project_applications'].first['situation']).to include(application2.situation)
+      expect(projects.second['project_applications'].first['professional']['email']).to include(professional.email)
       expect(projects.size).to eq(2)
     end
 
