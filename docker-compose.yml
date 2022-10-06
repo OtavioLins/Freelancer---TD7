@@ -42,7 +42,7 @@ services:
 
 networks: 
   freelancer: 
-    external: true
+    external: false
   db_network:
     external: false
   redis_network:

@@ -20,8 +20,8 @@ describe 'Closing and ending projects' do
     it 'professional cant see a closed project through his applications if his application wasnt accepted' do
       project = create(:project, title: 'Sistema de aluguel de imóveis', date_limit: 20.days.from_now)
       professional = create(:professional, complete_profile: true)
-      create(:project_application, project: project, professional: professional,
-                                   situation: :rejected)
+      create(:project_application, :rejected,
+             project: project, professional: professional)
 
       travel_to 20.days.from_now do
         login_as professional, scope: :professional

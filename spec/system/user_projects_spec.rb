@@ -100,28 +100,15 @@ describe 'Users projects' do
     end
 
     it 'through Professional homepage - professional can only see open projects' do
-      user = User.create!(email: 'otavio@user.com', password: '123131')
-      @project1 = Project.create!(title: 'Sistema de aluguel de imóveis',
-                                  description: 'Projeto que visa criar uma aplicação para oferecer imóveis alugáveis em todo o estado de São Paulo',
-                                  skills: 'Conhecimento em Rails, Web Design e segurança',
-                                  date_limit: 20.days.from_now, work_regimen: :remote,
-                                  hour_value: 300, user: user, status: :open)
-      @project2 = Project.create!(title: 'Sistema de aluguel de carros',
-                                  description: 'Projeto que visa criar uma aplicação para oferecer carros alugáveis em todo o estado de São Paulo',
-                                  skills: 'Conhecimento em Rails, Web Design e segurança',
-                                  date_limit: 10.days.from_now, work_regimen: :remote,
-                                  hour_value: 300, user: user, status: :closed)
-      @project3 = Project.create!(title: 'Sistema de aluguel de iates',
-                                  description: 'Projeto que visa criar uma aplicação para oferecer iater alugáveis em todo o litoral de São Paulo',
-                                  skills: 'Conhecimento em Rails, Web Design e segurança',
-                                  date_limit: 3.days.from_now, work_regimen: :remote,
-                                  hour_value: 300, user: user, status: :finished)
-      @professional = Professional.create!(email: 'otavio@professional.com.br', password: 'ahudufgvya')
-      @occupation_area = OccupationArea.create!(name: 'Dev')
-      @profile = Profile.create!(birth_date: 18.years.ago, full_name: 'Otávio Lins',
-                                 social_name: 'Otávio Augusto', prior_experience: 'Nenhuma',
-                                 educational_background: 'Matemático', occupation_area: @occupation_area,
-                                 description: 'Profissional em mud...', professional: @professional)
+      @project1 = create(:project, title: 'Sistema de aluguel de imóveis',
+                                   description: 'Projeto que visa criar uma aplicação para oferecer imóveis...')
+      @project2 = create(:project, title: 'Sistema de aluguel de carros',
+                                   description: 'Projeto que visa criar uma aplicação para oferecer carros...',
+                                   status: :closed)
+      @project3 = create(:project, title: 'Sistema de aluguel de iates',
+                                   description: 'Projeto que visa criar uma aplicação para oferecer iates...',
+                                   status: :finished)
+      @professional = create(:professional, complete_profile: true)
 
       login_as @professional, scope: :professional
       visit root_path

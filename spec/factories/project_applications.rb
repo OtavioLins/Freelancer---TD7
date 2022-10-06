@@ -9,5 +9,10 @@ FactoryBot.define do
     project
     professional { create(:professional, complete_profile: true) }
     situation { :analysis }
+
+    trait :rejected do
+      situation { :rejected }
+      reject_message { 'Não atendeu os requisitos' }
+    end
   end
 end
